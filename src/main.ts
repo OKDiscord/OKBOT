@@ -62,7 +62,6 @@ export class Main {
 
   constructor() {
     this.client = new Discord.Client()
-    this.init()
   }
 
   async init() {
@@ -167,4 +166,6 @@ export class Main {
 }
 
 const main = new Main()
+main.init()
+
 export default main
