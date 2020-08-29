@@ -1,6 +1,6 @@
 //Libs mad
 import * as Discord from "discord.js"
-import {createConnection, Connection} from 'typeorm'
+import { createConnection, Connection } from "typeorm"
 import fs from "fs"
 //Functions
 //Main
@@ -15,7 +15,6 @@ class Main {
   }
 
   async init() {
-    
     await this.initDiscord()
   }
 
