@@ -3,10 +3,6 @@
     "baseUrl": "./",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "paths": {
-      "~": ["./"],
-      "@": ["./src"]
-    }
+    "emitDecoratorMetadata": true
   }
 }

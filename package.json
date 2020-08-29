@@ -8,16 +8,16 @@
     "@types/node": "^14.6.2",
     "discord.js": "^12.0.2",
     "glob": "^7.1.6",
-    "module-alias": "^2.2.2",
     "mongodb": "^3.6.0",
-    "tsconfig-paths": "^3.9.0",
     "typeorm": "^0.2.25",
     "winston": "^3.3.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
   "scripts": {
-    "start": "NODE_ENV=production ts-node -r tsconfig-paths/register .",
-    "dev": "NODE_ENV=development nodemon -e ts,js,json --exec ts-node -r tsconfig-paths/register .",
+    "start": "NODE_ENV=production ts-node .",
+    "dev": "NODE_ENV=development nodemon -e ts,js,json --exec ts-node .",
     "format": "prettier --write .",
     "prec": "npm run format",
     "c": "git add . && git commit -m",
@@ -25,19 +25,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com/VottusCode/OKBOT"
+    "url": "git@github.com:VottusCode/OKBOT"
   },
   "keywords": [
-    "bot"
+    "bot",
+    "discord",
+    "okbot",
+    "okeyko",
+    "typescript",
+    "node.js"
   ],
-  "_moduleAliases": {
-    "~": [
-      "./"
-    ],
-    "@": [
-      "./src"
-    ]
-  },
   "author": "Simír Gerchán, Vottus",
   "license": "MIT"
 }
