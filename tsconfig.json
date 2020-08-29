@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

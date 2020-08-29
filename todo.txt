@@ -1,0 +1,2 @@
+Clean up code, especially unneeded brackets, extremely low priority
+Make notes detailing code

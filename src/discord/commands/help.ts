@@ -1,16 +1,13 @@
-import { MessageEmbed } from "discord.js"
+import { createDefault } from "../../utils/EmbedUtils"
 import config from "../../../config"
-import { Main, Command } from "../../main"
+import { Main, Command } from "../../Main"
 class Help {
   constructor() {
     return {
       name: "help",
       description: "Help vypíše všechny dostupné příkazy.",
       run: async (message, { discord: { commands } }) => {
-        const helpEmbed = new MessageEmbed()
-          .setTitle("Help")
-          .setColor("#b23bf0")
-          .setFooter(`OKBOT v${Main.version()} | By Simír Gerchán & Vottus`)
+        const helpEmbed = createDefault().setTitle("Help")
 
         for (const command of commands as Command[]) {
           helpEmbed.addField(

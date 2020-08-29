@@ -2,3 +2,6 @@
 /yarn-error.log
 /config.ts
 /logs
+
+/.idea
+/.vscode

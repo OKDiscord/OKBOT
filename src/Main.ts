@@ -60,8 +60,11 @@ export class Main {
 
   commands: Command[] = []
 
-  constructor() {
+  testing: boolean
+
+  constructor(testing?: boolean) {
     this.client = new Discord.Client()
+    this.testing = testing || false
   }
 
   async init() {
@@ -78,11 +81,12 @@ export class Main {
         url: config.mongoUri,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        entities: [path.join(__dirname, "db", "entity", "*.ts")],
       })
-      logger.info("Úspěšně připojeno k databázi.")
+      !this.testing && logger.info("Úspěšně připojeno k databázi.")
     } catch (e) {
       logger.error("Stala se chyba během připojování k databázi.")
-      logger.info(e)
+      logger.error(e)
     }
   }
 
@@ -96,9 +100,10 @@ export class Main {
       const {
         user: { username, discriminator },
       } = this.client
-      logger.info(
-        `Úspěšně přihlášen na Discord jako ${username}#${discriminator}`
-      )
+      !this.testing &&
+        logger.info(
+          `Úspěšně přihlášen na Discord jako ${username}#${discriminator}`
+        )
     } catch (e) {
       logger.error("Stala se chyba během přihlašování.")
       logger.error(e)
@@ -117,7 +122,9 @@ export class Main {
 
       for (const file of files) {
         const command = await import(file)
-        this.commands.push(command.default())
+        if (typeof command.default === "function") {
+          this.commands.push(command.default())
+        }
       }
     })
   }
@@ -165,7 +172,4 @@ export class Main {
   }
 }
 
-const main = new Main()
-main.init()
-
-export default main
+export default Main

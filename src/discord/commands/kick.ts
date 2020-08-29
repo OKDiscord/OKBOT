@@ -1,4 +1,4 @@
-import { Command, logger } from "../../main"
+import { Command, logger } from "../../Main"
 
 class Kick {
   constructor() {
@@ -42,7 +42,9 @@ class Kick {
             logger.error({ e })
           }
         }
-
+        message.channel.send(
+          `${toKick.nickname} byl/a úspěšně vyhozen/a!\nZodpovědný Moderátor: <@${message.author.id}>!`
+        )
         return await toKick.kick()
       },
     } as Command
