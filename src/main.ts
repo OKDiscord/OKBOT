@@ -36,14 +36,24 @@ export const logger = createLogger({
 
 type EnvironmentType = "development" | "production"
 
+// /{args, discord: { instance: this.client, commands: this.commands }}
+
+export type CommandContext = {
+  args: String[]
+  discord: {
+    instance: Discord.Client
+    commands: Command[]
+  }
+}
+
 export type Command = {
   name: string
   description?: string
-  run: Function
+  run: (message: Discord.Message, context: CommandContext) => any
 }
 
 //Main
-class Main {
+export class Main {
   // Variables
   client: Discord.Client
   db: Connection
@@ -56,10 +66,11 @@ class Main {
   }
 
   async init() {
-    logger.info(`OKBOT ${this.version()}`)
+    logger.info(`OKBOT ${Main.version()}`)
     await this.initDatabase()
     await this.initDiscord()
     await this.initCommands()
+    await this.initDiscordEvents()
   }
   async initDatabase() {
     try {
@@ -114,7 +125,8 @@ class Main {
 
   async initDiscordEvents() {
     this.client.on("message", async (message) => {
-      if (!message.cleanContent.startsWith(config.prefix)) return
+      if (!message.cleanContent.startsWith(config.prefix) || !message.guild)
+        return
 
       const args = message.cleanContent
         .slice(config.prefix.length)
@@ -124,10 +136,16 @@ class Main {
 
       for (const command of this.commands) {
         if (command.name === commandName) {
-          await command.run(message)
+          const context = {
+            args,
+            discord: { instance: this.client, commands: this.commands },
+          }
+          await command.run(message, context)
           return
         }
       }
+
+      message.reply("toto není příkaz!")
     })
 
     this.client.on("disconnect", () => {
@@ -135,11 +153,11 @@ class Main {
     })
   }
 
-  env() {
+  static env() {
     return (process.env.NODE_ENV as EnvironmentType) || "production"
   }
 
-  version() {
+  static version() {
     return (
       JSON.parse(
         fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf-8")
