@@ -8,7 +8,7 @@ class Warn {
     return {
       name: "warn",
       description:
-        "Warn varuje uživatele.\nPo třech varováních ho automaticky vyhodí.\nJen pro moderátory!",
+        "Warn varuje uživatele.\nPo třech varováních ho automaticky vyhodí.\nJen pro moderátory!\nPoužití: warn <uživatel>.",
       run: async (message, context) => {
         if (!message.member.hasPermission("KICK_MEMBERS"))
           return message.reply("nemáš oprávnění na tento příkaz.")
@@ -58,7 +58,7 @@ class Warn {
             [
               `${toWarn.user.username} byl/a úspěšně varován/a!`,
               "",
-              `Zodpovědný moderátor: ${message.author.id}`,
+              `Zodpovědný moderátor: <@${message.author.id}>`,
               `Počet varování: ${isThere.warnings}`,
             ]
           )
@@ -71,7 +71,7 @@ class Warn {
             [
               `${toWarn.user.username} byl/a úspěšně varován/a!`,
               "",
-              `Zodpovědný moderátor: ${message.author.id}`,
+              `Zodpovědný moderátor: <@${message.author.id}>`,
               `Počet varování: 1`,
             ]
           )

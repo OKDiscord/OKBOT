@@ -22,8 +22,8 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "start": "NODE_ENV=production ts-node .",
-    "dev": "NODE_ENV=development nodemon -e ts,js,json --exec ts-node .",
+    "start":  "ts-node .",
+    "dev": "nodemon -e ts,js,json --exec ts-node .",
     "test": "mocha --timeout 20000 -r ts-node/register test/*.ts",
     "format": "prettier --write .",
     "prec": "npm run format",

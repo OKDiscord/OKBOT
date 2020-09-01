@@ -4,7 +4,7 @@ class Ban {
   constructor() {
     return {
       name: "ban",
-      description: "Ban zabanuje daného uživatele.\nJen pro moderátory!",
+      description: "Ban zabanuje daného uživatele.\nJen pro moderátory!\nPoužití: ban <uživatel>.",
       run: async (message, context) => {
         if (!message.member.hasPermission("BAN_MEMBERS")) {
           return message.reply("nemáš oprávnění na tento příkaz.")
