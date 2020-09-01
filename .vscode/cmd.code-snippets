@@ -1,0 +1,24 @@
+{
+  "Base template for OKBOT commands": {
+    "prefix": "cmd",
+    "body": [
+      "import { Command, logger } from '../../Main'",
+      "",
+      "class $1 {",
+      "  constructor() {",
+      "    return {",
+      "      name: '$1',",
+      "      description: '$2',",
+      "      run: async (message, context) => {",
+      "        $3",
+      "      },",
+      "    } as Command",
+      "  }",
+      "}",
+      "",
+      "export default $1",
+      ""
+    ],
+    "description": "Base template for OKBOT commands"
+  }
+}
