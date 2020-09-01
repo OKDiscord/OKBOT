@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js"
+import { MessageEmbed } from "discord.js"
 import Main from "../Main"
 
 export const createSimple = (title: string, subtitle: string) => {
