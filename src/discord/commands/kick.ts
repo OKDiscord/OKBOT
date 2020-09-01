@@ -6,7 +6,7 @@ class Kick {
       name: "kick",
       description:
         "Kick vyhodí daného uživatele.\nJen pro moderátory!\nPoužití: kick <uživatel>.",
-      run: async (message, context) => {
+      run: async (message) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) {
           return await message.reply("nemáš oprávnění na tento příkaz.")
         }

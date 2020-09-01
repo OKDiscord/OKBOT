@@ -1,8 +1,5 @@
-import { createDefault } from "../../utils/EmbedUtils"
-import config from "../../../config"
-import { Main, Command } from "../../Main"
+import { Command } from "../../Main"
 import { getMongoManager } from "typeorm"
-import { createSimple, createSimpleMultiline } from "../../utils/EmbedUtils"
 import { WarnProfile } from "../../db/entity/WarnProfile"
 class Infractions {
   constructor() {

@@ -6,7 +6,7 @@ class Ban {
       name: "ban",
       description:
         "Ban zabanuje daného uživatele.\nJen pro moderátory!\nPoužití: ban <uživatel>.",
-      run: async (message, context) => {
+      run: async (message) => {
         if (!message.member.hasPermission("BAN_MEMBERS")) {
           return await message.reply("nemáš oprávnění na tento příkaz.")
         }

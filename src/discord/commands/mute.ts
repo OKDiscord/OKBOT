@@ -1,4 +1,4 @@
-import { Command, logger } from "../../Main"
+import { Command } from "../../Main"
 import config from "../../../config"
 class Mute {
   constructor() {
@@ -6,7 +6,7 @@ class Mute {
       name: "mute",
       description:
         "Mute ztlumí daného uživatele.\nPokud už ztlumený je, tak mu roli odebere.\nJen pro moderátory!\nPoužití: mute <uživatel>.",
-      run: async (message, context) => {
+      run: async (message) => {
         if (!message.member.hasPermission("KICK_MEMBERS"))
           return await message.reply("nemáš oprávnění na tento příkaz.")
         if (message.mentions.members.size == 0)

@@ -1,8 +1,5 @@
-import { Command, logger } from "../../Main"
-import { createDefault } from "../../utils/EmbedUtils"
-import config from "../../../config"
+import { Command } from "../../Main"
 import { getMongoManager } from "typeorm"
-import { createSimple, createSimpleMultiline } from "../../utils/EmbedUtils"
 import { WarnProfile } from "../../db/entity/WarnProfile"
 
 class Cw {
@@ -11,7 +8,7 @@ class Cw {
       name: "cw",
       description:
         "Cw čistí varování uživatele.\nJen pro moderátory!\nPoužití: cw <uživatel>.",
-      run: async (message, context) => {
+      run: async (message) => {
         if (!message.member.hasPermission("ADMINISTRATOR"))
           return await message.reply("nemáš oprávnění na tento příkaz.")
         if (message.mentions.members.size == 0)

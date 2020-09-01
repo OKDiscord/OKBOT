@@ -1,7 +1,7 @@
 import { WarnProfile } from "../../db/entity/WarnProfile"
 import { Command } from "../../Main"
 import { getMongoManager } from "typeorm"
-import { createSimple, createSimpleMultiline } from "../../utils/EmbedUtils"
+import { createSimpleMultiline } from "../../utils/EmbedUtils"
 
 class Warn {
   constructor() {
@@ -9,7 +9,7 @@ class Warn {
       name: "warn",
       description:
         "Warn varuje uživatele.\nPo třech varováních ho automaticky vyhodí.\nJen pro moderátory!\nPoužití: warn <uživatel>.",
-      run: async (message, context) => {
+      run: async (message) => {
         if (!message.member.hasPermission("KICK_MEMBERS"))
           return await message.reply("nemáš oprávnění na tento příkaz.")
 

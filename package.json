@@ -19,15 +19,19 @@
   "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/mocha": "^8.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
     "chai": "^4.2.0",
+    "eslint": "^7.8.0",
     "nodemon": "^2.0.4"
   },
   "scripts": {
     "start": "ts-node .",
     "dev": "nodemon -e ts,js,json --exec ts-node .",
     "test": "mocha --timeout 20000 -r ts-node/register test/*.ts",
+    "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
-    "prec": "yarn format",
+    "prec": "yarn format && yarn lint",
     "c": "git add . && git commit -m",
     "p": "git push origin"
   },

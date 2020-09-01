@@ -39,7 +39,7 @@ type EnvironmentType = "development" | "production"
 // /{args, discord: { instance: this.client, commands: this.commands }}
 
 export type CommandContext = {
-  args: String[]
+  args: string[]
   discord: {
     instance: Discord.Client
     commands: Command[]
@@ -49,7 +49,7 @@ export type CommandContext = {
 export type Command = {
   name: string
   description?: string
-  run: (message: Discord.Message, context: CommandContext) => any
+  run: (message: Discord.Message, context: CommandContext) => unknown
 }
 
 //Main
