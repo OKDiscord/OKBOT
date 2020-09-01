@@ -11,16 +11,18 @@ class Warn {
         "Warn varuje uživatele.\nPo třech varováních ho automaticky vyhodí.\nJen pro moderátory!\nPoužití: warn <uživatel>.",
       run: async (message, context) => {
         if (!message.member.hasPermission("KICK_MEMBERS"))
-          return message.reply("nemáš oprávnění na tento příkaz.")
+          return await message.reply("nemáš oprávnění na tento příkaz.")
 
         if (message.mentions.everyone)
-          return message.reply("nemůžeš varovat všechny.")
+          return await message.reply("nemůžeš varovat všechny.")
 
         if (message.mentions.members.size === 0)
-          return message.reply("musíš označit osobu kterou chceš varovat!")
+          return await message.reply(
+            "musíš označit osobu, kterou chceš varovat!"
+          )
 
         if (message.mentions.members.first().id == message.guild.me.id)
-          return message.reply("já se sám nedokážu varovat!")
+          return await message.reply("sám sebe nedokážu varovat!")
 
         const toWarn = message.mentions.members.first()
         const warnProfile = getMongoManager().getMongoRepository(WarnProfile)

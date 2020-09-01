@@ -4,25 +4,28 @@ class Kick {
   constructor() {
     return {
       name: "kick",
-      description: "Kick vyhodí daného uživatele.\nJen pro moderátory!\nPoužití: kick <uživatel>.",
+      description:
+        "Kick vyhodí daného uživatele.\nJen pro moderátory!\nPoužití: kick <uživatel>.",
       run: async (message, context) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) {
-          return message.reply("nemáš oprávnění na tento příkaz.")
+          return await message.reply("nemáš oprávnění na tento příkaz.")
         }
 
         if (message.mentions.everyone) {
-          return message.reply("nemůžeš vykickovat všechny.")
+          return await message.reply("nemůžeš vykickovat všechny.")
           // TODO: alert admins?
         }
 
         if (message.mentions.members.size === 0) {
-          return message.reply("musíš označit osobu kterou chceš kicknout!")
+          return await message.reply(
+            "musíš označit osobu kterou chceš kicknout!"
+          )
         }
 
         const toKick = message.mentions.members.first()
 
         if (!toKick.kickable) {
-          return message.reply("nemůžeš kicknout daného člověka.")
+          return await message.reply("nemůžeš kicknout daného člověka.")
         }
 
         try {

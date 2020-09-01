@@ -10,8 +10,9 @@
     "glob": "^7.1.6",
     "mocha": "^8.1.3",
     "mongodb": "^3.6.0",
-    "typeorm": "^0.2.25",
+    "prettier": "^2.1.1",
     "ts-node": "^9.0.0",
+    "typeorm": "^0.2.25",
     "typescript": "^4.0.2",
     "winston": "^3.3.3"
   },
@@ -22,11 +23,11 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "start":  "ts-node .",
+    "start": "ts-node .",
     "dev": "nodemon -e ts,js,json --exec ts-node .",
     "test": "mocha --timeout 20000 -r ts-node/register test/*.ts",
     "format": "prettier --write .",
-    "prec": "npm run format",
+    "prec": "yarn format",
     "c": "git add . && git commit -m",
     "p": "git push origin"
   },
