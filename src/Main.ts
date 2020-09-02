@@ -86,7 +86,8 @@ export class Main {
       !this.testing && logger.info("Úspěšně připojeno k databázi.")
     } catch (e) {
       logger.error("Stala se chyba během připojování k databázi.")
-      logger.error(e)
+      logger.error(e.message)
+      process.exit(1)
     }
   }
 
