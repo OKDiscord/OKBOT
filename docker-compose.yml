@@ -6,8 +6,6 @@ services:
     build:
       context: "."
       dockerfile: Dockerfile
-    ports:
-      - "4000:4000"
     volumes:
       - .:/usr/src/okbot
       - /usr/src/okbot/node_modules
