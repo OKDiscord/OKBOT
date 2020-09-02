@@ -25,7 +25,7 @@ class Ban {
         const toBan = message.mentions.members.first()
 
         if (!toBan.bannable) {
-          return message.reply("nemůžeš zabanovat daného člověka.")
+          return await message.reply("nemůžeš zabanovat daného člověka.")
         }
 
         try {

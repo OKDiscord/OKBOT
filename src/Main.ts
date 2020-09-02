@@ -129,10 +129,10 @@ export class Main {
     })
   }
 
-  async initDiscordEvents() {
+  initDiscordEvents() {
     this.client.on("message", async (message) => {
       if (!message.cleanContent.startsWith(config.prefix) || !message.guild)
-        return
+        return false
 
       const args = message.cleanContent
         .slice(config.prefix.length)
@@ -146,12 +146,11 @@ export class Main {
             args,
             discord: { instance: this.client, commands: this.commands },
           }
-          await command.run(message, context)
-          return
+          return command.run(message, context)
         }
       }
 
-      message.reply("toto není příkaz!")
+      return await message.reply("toto není příkaz!")
     })
 
     this.client.on("disconnect", () => {
