@@ -38,18 +38,32 @@ type EnvironmentType = "development" | "production"
 
 // /{args, discord: { instance: this.client, commands: this.commands }}
 
-export type CommandContext = {
-  args: string[]
+export interface Context {
   discord: {
     instance: Discord.Client
     commands: Command[]
   }
 }
 
+export interface CommandContext extends Context {
+  args: string[]
+}
+
+export interface EventContext<K extends keyof Discord.ClientEvents>
+  extends Context {
+  eventName: K
+  args: Discord.ClientEvents[K]
+}
+
 export type Command = {
   name: string
   description?: string
   run: (message: Discord.Message, context: CommandContext) => unknown
+}
+
+export interface Event<K extends keyof Discord.ClientEvents> {
+  listensTo: K
+  run: (context: EventContext<K>) => unknown
 }
 
 //Main
@@ -114,10 +128,10 @@ export class Main {
 
   async initCommands() {
     const commandsPath = path.join(__dirname, "discord", "commands", "*.ts")
-    await glob(commandsPath, async (err, files) => {
-      if (err) {
+    await glob(commandsPath, async (e, files) => {
+      if (e) {
         logger.error("Nelze načíst příkazy.")
-        logger.error(err)
+        logger.error(e)
         process.exit(1)
       }
 
@@ -130,32 +144,32 @@ export class Main {
     })
   }
 
-  initDiscordEvents() {
-    this.client.on("message", async (message) => {
-      if (!message.cleanContent.startsWith(config.prefix) || !message.guild)
-        return false
-
-      const args = message.cleanContent
-        .slice(config.prefix.length)
-        .trim()
-        .split(" ")
-      const commandName = args.shift().toLowerCase()
-
-      for (const command of this.commands) {
-        if (command.name === commandName) {
-          const context = {
-            args,
-            discord: { instance: this.client, commands: this.commands },
-          }
-          return command.run(message, context)
-        }
+  async initDiscordEvents() {
+    const eventsPath = path.join(__dirname, "discord", "events", "*.ts")
+    await glob(eventsPath, async (e, files) => {
+      if (e) {
+        logger.error("Nelze načíst eventy.")
+        logger.error(e)
+        process.exit(1)
       }
 
-      return await message.reply("toto není příkaz!")
-    })
-
-    this.client.on("disconnect", () => {
-      logger.error("got diconnected!")
+      for (const file of files) {
+        const command = await import(file)
+        if (typeof command.default === "function") {
+          const event: Event<any> = command.default()
+          this.client.on(event.listensTo, (...args) => {
+            const context = {
+              discord: {
+                instance: this.client,
+                commands: this.commands,
+              },
+              eventName: event.listensTo,
+              args,
+            }
+            return event.run(context)
+          })
+        }
+      }
     })
   }
 

@@ -1,0 +1,22 @@
+{
+  "Base template for OKBOT events": {
+    "prefix": "evt",
+    "body": [
+      "import { Event } from '../../Main'",
+      "",
+      "class $1 {",
+      "  constructor() {",
+      "    return {",
+      "      listensTo: '$2',",
+      "      run: async (context) => {",
+      "        $3",
+      "      },",
+      "    } as Event<'$2'>",
+      "  }",
+      "}",
+      "",
+      "export default $1"
+    ],
+    "description": "Base template for OKBOT events"
+  }
+}

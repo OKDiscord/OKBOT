@@ -4,3 +4,5 @@
 /logs
 
 /.idea
+
+/deploy.sh

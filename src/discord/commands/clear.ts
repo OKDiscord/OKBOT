@@ -1,6 +1,4 @@
-import { createDefault } from "../../utils/EmbedUtils"
-import config from "../../../config"
-import { Main, Command, logger } from "../../Main"
+import { Command } from "../../Main"
 import { TextChannel } from "discord.js"
 class Clear {
   constructor() {

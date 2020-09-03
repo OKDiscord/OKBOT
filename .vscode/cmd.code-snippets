@@ -2,7 +2,7 @@
   "Base template for OKBOT commands": {
     "prefix": "cmd",
     "body": [
-      "import { Command, logger } from '../../Main'",
+      "import { Command } from '../../Main'",
       "",
       "class $1 {",
       "  constructor() {",
