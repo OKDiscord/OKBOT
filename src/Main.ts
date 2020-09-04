@@ -156,7 +156,7 @@ export class Main {
       for (const file of files) {
         const command = await import(file)
         if (typeof command.default === "function") {
-          const event: Event<any> = command.default()
+          const event: Event<keyof Discord.ClientEvents> = command.default()
           this.client.on(event.listensTo, (...args) => {
             const context = {
               discord: {
