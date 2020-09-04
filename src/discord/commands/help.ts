@@ -5,7 +5,7 @@ class Help {
   constructor() {
     return {
       name: "help",
-      description: "Help vypíše všechny dostupné příkazy.\nPoužití: help.",
+      description: ["Help vypíše všechny dostupné příkazy.", "Použití: help."],
       run: async (message, { discord: { commands } }) => {
         const helpEmbed = createDefault().setTitle("Help")
 

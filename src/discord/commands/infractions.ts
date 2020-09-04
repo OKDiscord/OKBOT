@@ -5,8 +5,10 @@ class Infractions {
   constructor() {
     return {
       name: "infractions",
-      description:
-        "Infractions umožňuje moderátorům zjišťovat varování daných uživatelů.\nPoužití: infractions <uživatel>.",
+      description: [
+        "Infractions umožňuje moderátorům zjišťovat varování daných uživatelů.",
+        "Použití: infractions <uživatel>.",
+      ],
       run: async (message) => {
         if (message.mentions.members.size == 0)
           return await message.reply("nevím, koho mám zobrazit!")

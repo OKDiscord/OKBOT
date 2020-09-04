@@ -1,8 +1,29 @@
-import { MessageEmbed } from "discord.js"
+import { MessageEmbed, User } from "discord.js"
 import Main from "../Main"
+
+export const createSimpleMention = (
+  title: string,
+  subtitle: string,
+  user: User
+) => {
+  return createSimple(title, `${mention(user)}, ${subtitle}`)
+}
+
+export const createSimpleMultilineMention = (
+  title: string,
+  subtitle: string[],
+  user: User
+) => {
+  subtitle[0] = `${mention(user)}, ${subtitle[0]}`
+  return createSimpleMultiline(title, subtitle)
+}
 
 export const createSimple = (title: string, subtitle: string) => {
   return createDefault().setTitle(title).setDescription(subtitle)
+}
+
+export const mention = (user: User) => {
+  return `<@${user.id}>`
 }
 
 export const createSimpleMultiline = (title, subtitle: string[]) => {

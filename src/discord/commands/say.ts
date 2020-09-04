@@ -3,8 +3,11 @@ class Say {
   constructor() {
     return {
       name: "say",
-      description:
-        "Say umožňuje oficiálnější sdělování zpráv.\nJen pro moderátory!\nPoužití: say <kanál> <obsah>.",
+      description: [
+        "Say umožňuje oficiálnější sdělování zpráv.",
+        "Jen pro moderátory!",
+        "Použití: say <kanál> <obsah>.",
+      ],
       run: async (message, { args }) => {
         if (!message.member.hasPermission("KICK_MEMBERS"))
           return await message.reply("nemáš povolení na tento příkaz!")

@@ -7,8 +7,12 @@ class Warn {
   constructor() {
     return {
       name: "warn",
-      description:
-        "Warn varuje uživatele.\nPo třech varováních ho automaticky vyhodí.\nJen pro moderátory!\nPoužití: warn <uživatel>.",
+      description: [
+        "Warn varuje uživatele.",
+        "Po třech varováních ho automaticky vyhodí.",
+        "Jen pro moderátory!",
+        "Použití: warn <uživatel>.",
+      ],
       run: async (message) => {
         if (!message.member.hasPermission("KICK_MEMBERS"))
           return await message.reply("nemáš oprávnění na tento příkaz.")

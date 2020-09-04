@@ -1,11 +1,16 @@
 import { Command } from "../../Main"
 import { TextChannel } from "discord.js"
+import { createSimple } from "../../utils/EmbedUtils"
 class Clear {
   constructor() {
     return {
       name: "clear",
-      description:
-        "Clear čistí chat.\nJen pro moderátory!\nPoužití: clear <počet do 98>.\nPS: Funguje i se znaky :D",
+      description: [
+        "Clear čistí chat.",
+        "Jen pro moderátory!",
+        "Použití: clear <počet do 98>.",
+        "PS: Funguje i se znaky :D",
+      ],
       run: async (message, { args }) => {
         if (!message.member.hasPermission("KICK_MEMBERS"))
           return await message.reply("nemáš oprávnění na tento příkaz.")
@@ -17,7 +22,7 @@ class Clear {
         ;(channel as TextChannel).bulkDelete(Number(args[0]) + 2)
 
         const deletedMessage = await message.channel.send(
-          `Vyčistil jsem ${Number(args[0])} zpráv.`
+          createSimple("Úspěch", `Vyčistil jsem ${Number(args[0])} zpráv.`)
         )
         return setTimeout(async () => await deletedMessage.delete(), 5000)
       },

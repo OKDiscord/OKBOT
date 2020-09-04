@@ -4,8 +4,11 @@ class Kick {
   constructor() {
     return {
       name: "kick",
-      description:
-        "Kick vyhodí daného uživatele.\nJen pro moderátory!\nPoužití: kick <uživatel>.",
+      description: [
+        "Kick vyhodí daného uživatele.",
+        "Jen pro moderátory!",
+        "Použití: kick <uživatel>.",
+      ],
       run: async (message) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) {
           return await message.reply("nemáš oprávnění na tento příkaz.")

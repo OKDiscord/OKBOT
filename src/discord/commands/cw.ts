@@ -6,8 +6,11 @@ class Cw {
   constructor() {
     return {
       name: "cw",
-      description:
-        "Cw čistí varování uživatele.\nJen pro moderátory!\nPoužití: cw <uživatel>.",
+      description: [
+        "Cw čistí varování uživatele.",
+        "Jen pro moderátory!",
+        "Použití: cw <uživatel>.",
+      ],
       run: async (message) => {
         if (!message.member.hasPermission("ADMINISTRATOR"))
           return await message.reply("nemáš oprávnění na tento příkaz.")

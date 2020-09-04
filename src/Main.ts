@@ -57,7 +57,7 @@ export interface EventContext<K extends keyof Discord.ClientEvents>
 
 export type Command = {
   name: string
-  description?: string
+  description?: string | Array<string>
   run: (message: Discord.Message, context: CommandContext) => unknown
 }
 
@@ -136,9 +136,17 @@ export class Main {
       }
 
       for (const file of files) {
-        const command = await import(file)
-        if (typeof command.default === "function") {
-          this.commands.push(command.default())
+        const cmd = await import(file)
+        if (typeof cmd.default === "function") {
+          const command: Command = cmd.default()
+          if (command.description) {
+            if (command.description instanceof Array) {
+              command.description = (command.description as Array<string>).join(
+                "\n"
+              )
+            }
+          }
+          this.commands.push(command)
         }
       }
     })
@@ -154,9 +162,9 @@ export class Main {
       }
 
       for (const file of files) {
-        const command = await import(file)
-        if (typeof command.default === "function") {
-          const event: Event<keyof Discord.ClientEvents> = command.default()
+        const evt = await import(file)
+        if (typeof evt.default === "function") {
+          const event: Event<keyof Discord.ClientEvents> = evt.default()
           this.client.on(event.listensTo, (...args) => {
             const context = {
               discord: {

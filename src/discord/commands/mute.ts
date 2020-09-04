@@ -4,8 +4,12 @@ class Mute {
   constructor() {
     return {
       name: "mute",
-      description:
-        "Mute ztlumí daného uživatele.\nPokud už ztlumený je, tak mu roli odebere.\nJen pro moderátory!\nPoužití: mute <uživatel>.",
+      description: [
+        "Mute ztlumí daného uživatele.",
+        "Pokud už ztlumený je, tak mu roli odebere.",
+        "Jen pro moderátory!",
+        "Použití: mute <uživatel>.",
+      ],
       run: async (message) => {
         if (!message.member.hasPermission("KICK_MEMBERS"))
           return await message.reply("nemáš oprávnění na tento příkaz.")
