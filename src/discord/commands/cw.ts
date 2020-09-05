@@ -1,4 +1,4 @@
-import { Command } from "../../Main"
+import { Command } from "../../types/Command"
 import { getMongoManager } from "typeorm"
 import { WarnProfile } from "../../db/entity/WarnProfile"
 

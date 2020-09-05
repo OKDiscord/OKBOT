@@ -1,4 +1,5 @@
-import { Command, logger } from "../../Main"
+import { logger } from "../../Main"
+import { Command } from "../../types/Command"
 
 class Kick {
   constructor() {

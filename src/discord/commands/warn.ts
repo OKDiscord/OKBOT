@@ -1,5 +1,5 @@
 import { WarnProfile } from "../../db/entity/WarnProfile"
-import { Command } from "../../Main"
+import { Command } from "../../types/Command"
 import { getMongoManager } from "typeorm"
 import { createSimpleMultiline } from "../../utils/EmbedUtils"
 

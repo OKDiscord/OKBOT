@@ -1,6 +1,6 @@
 import { createDefault } from "../../utils/EmbedUtils"
 import config from "../../../config"
-import { Command } from "../../Main"
+import { Command } from "../../types/Command"
 class Help {
   constructor() {
     return {

@@ -7,6 +7,9 @@ import path from "path"
 import config from "../config"
 
 import { createLogger, format, transports } from "winston"
+import { Command } from "./types/Command"
+import { Event } from "./types/Event"
+import { EnvironmentType } from "./types/Misc"
 
 const loggerFormat = format.printf(({ level, message, timestamp }) => {
   return `${timestamp} | ${level}: ${message}`
@@ -33,38 +36,6 @@ export const logger = createLogger({
     }),
   ],
 })
-
-type EnvironmentType = "development" | "production"
-
-// /{args, discord: { instance: this.client, commands: this.commands }}
-
-export interface Context {
-  discord: {
-    instance: Discord.Client
-    commands: Command[]
-  }
-}
-
-export interface CommandContext extends Context {
-  args: string[]
-}
-
-export interface EventContext<K extends keyof Discord.ClientEvents>
-  extends Context {
-  eventName: K
-  args: Discord.ClientEvents[K]
-}
-
-export type Command = {
-  name: string
-  description?: string | Array<string>
-  run: (message: Discord.Message, context: CommandContext) => unknown
-}
-
-export interface Event<K extends keyof Discord.ClientEvents> {
-  listensTo: K
-  run: (context: EventContext<K>) => unknown
-}
 
 //Main
 export class Main {
@@ -194,4 +165,7 @@ export class Main {
   }
 }
 
-export default Main
+const main = new Main(false)
+main.init()
+
+export default main

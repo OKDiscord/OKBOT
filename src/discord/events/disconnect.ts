@@ -1,4 +1,5 @@
-import { Event, logger } from "../../Main"
+import { logger } from "../../Main"
+import { Event } from "../../types/Event"
 
 class Disconnect {
   constructor() {

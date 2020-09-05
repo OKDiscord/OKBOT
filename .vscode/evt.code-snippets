@@ -2,7 +2,7 @@
   "Base template for OKBOT events": {
     "prefix": "evt",
     "body": [
-      "import { Event } from '../../Main'",
+      "import { Event } from '../../types/Event'",
       "",
       "class $1 {",
       "  constructor() {",

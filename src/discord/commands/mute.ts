@@ -1,4 +1,4 @@
-import { Command } from "../../Main"
+import { Command } from "../../types/Command"
 import config from "../../../config"
 class Mute {
   constructor() {

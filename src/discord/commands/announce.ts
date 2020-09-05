@@ -1,5 +1,9 @@
-import { Command } from "../../Main"
-import { createDefault, createSimpleMention } from "../../utils/EmbedUtils"
+import { Command } from "../../types/Command"
+import {
+  createDefault,
+  createSimpleMention,
+  createSimpleMultilineMention,
+} from "../../utils/EmbedUtils"
 import { shiftMany } from "../../utils/ArrayUtils"
 class Announce {
   constructor() {
@@ -40,7 +44,10 @@ class Announce {
         const title = embedContent[0]
         const text = embedContent[1].split("|")
 
-        if (text.length < 2) return await message.reply("nemám co říct!")
+        if (text.length < 2)
+          return await message.channel.send(
+            createSimpleMention("Chyba", "nemám co oznámit!", message.author)
+          )
 
         const embed = createDefault().setTitle(title)
 
@@ -52,12 +59,23 @@ class Announce {
           []
         )
 
-        for (let i = 0; i < fields.length; i++) {
-          const poggers = fields[i]
-          embed.addField(poggers[0], poggers[1])
+        for (const field of fields) {
+          if (!field[0] || field[0] === "" || !field[1] || field[1] === "") {
+            return await message.channel.send(
+              createSimpleMultilineMention(
+                "Chyba",
+                [
+                  "špatně jsi použil příkaz!",
+                  "Jeden z podtitulků/textů chybí!",
+                ],
+                message.author
+              )
+            )
+          }
+          embed.addField(field[0], field[1])
         }
 
-        message.mentions.channels.first().send(embed)
+        return await message.mentions.channels.first().send(embed)
       },
     } as Command
   }

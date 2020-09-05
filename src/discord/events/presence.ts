@@ -1,5 +1,5 @@
 import config from "../../../config"
-import { Event } from "../../Main"
+import { Event } from "../../types/Event"
 
 class Presence {
   constructor() {

@@ -1,4 +1,4 @@
-import { Command } from "../../Main"
+import { Command } from "../../types/Command"
 import { TextChannel } from "discord.js"
 import { createSimple } from "../../utils/EmbedUtils"
 class Clear {

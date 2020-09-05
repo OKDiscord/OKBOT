@@ -1,5 +1,5 @@
 import { MessageEmbed, User } from "discord.js"
-import Main from "../Main"
+import { Main } from "../Main"
 
 export const createSimpleMention = (
   title: string,

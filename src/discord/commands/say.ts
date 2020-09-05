@@ -1,4 +1,4 @@
-import { Command } from "../../Main"
+import { Command } from "../../types/Command"
 class Say {
   constructor() {
     return {

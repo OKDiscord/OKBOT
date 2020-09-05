@@ -1,5 +1,6 @@
-import { CommandContext, Event } from "../../Main"
+import { Event } from "../../types/Event"
 import config from "../../../config"
+import { CommandContext } from "../../types/Command"
 
 class Command {
   constructor() {
