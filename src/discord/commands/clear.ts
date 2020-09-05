@@ -1,6 +1,6 @@
 import { Command } from "../../types/Command"
 import { TextChannel } from "discord.js"
-import { createSimple } from "../../utils/EmbedUtils"
+import { createSimple, createSimpleMention } from "../../utils/EmbedUtils"
 class Clear {
   constructor() {
     return {
@@ -13,13 +13,39 @@ class Clear {
       ],
       run: async (message, { args }) => {
         if (!message.member.hasPermission("KICK_MEMBERS"))
-          return await message.reply("nemáš oprávnění na tento příkaz.")
-        if (!args) return await message.reply("potřebuji specifikovat číslo.")
-        if (Number(args[0]) > 98)
-          return await message.reply("tolik zpráv najednou nemohu vyčistit.")
+          return await message.channel.send(
+            createSimpleMention(
+              "Chyba",
+              "nemáš oprávnění na tento příkaz.",
+              message.author
+            )
+          )
+
+        if (!args)
+          return await message.channel.send(
+            createSimpleMention(
+              "Chyba",
+              "musíš specifikovat číslo!",
+              message.author
+            )
+          )
 
         const { channel } = message
-        ;(channel as TextChannel).bulkDelete(Number(args[0]) + 2)
+        const toClear = Number(args[0])
+
+        if (toClear > 100) {
+          const howMany = Math.floor(toClear / 100)
+          for (let i = 0; i < howMany; i++) {
+            await (channel as TextChannel).bulkDelete(100)
+          }
+
+          const isRemaining = toClear - howMany * 100
+          if (isRemaining >= 1) {
+            await (channel as TextChannel).bulkDelete(isRemaining)
+          }
+        } else {
+          await (channel as TextChannel).bulkDelete(Number(toClear))
+        }
 
         const deletedMessage = await message.channel.send(
           createSimple("Úspěch", `Vyčistil jsem ${Number(args[0])} zpráv.`)

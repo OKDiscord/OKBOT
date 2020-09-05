@@ -9,6 +9,8 @@ class Command {
       run: async (context) => {
         const message = context.args[0]
 
+        if (message.author.bot) return false
+
         if (!message.cleanContent.startsWith(config.prefix) || !message.guild)
           return false
 
