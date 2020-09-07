@@ -11,7 +11,7 @@ class MemberLeave {
         } = context.args[0]
 
         const memberCountChannel = channels.cache.find(
-          (channel) => channel.id === config.muteRoleId
+          (channel) => channel.id === config.memberCountChannelId
         )
         if (!memberCountChannel) return false
 
