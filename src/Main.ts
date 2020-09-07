@@ -45,11 +45,8 @@ export class Main {
 
   commands: Command[] = []
 
-  testing: boolean
-
-  constructor(testing?: boolean) {
+  constructor() {
     this.client = new Discord.Client()
-    this.testing = testing || false
   }
 
   async init() {
@@ -68,7 +65,7 @@ export class Main {
         useUnifiedTopology: true,
         entities: [path.join(__dirname, "db", "entity", "*.ts")],
       })
-      !this.testing && logger.info("Úspěšně připojeno k databázi.")
+      logger.info("Úspěšně připojeno k databázi.")
     } catch (e) {
       logger.error("Stala se chyba během připojování k databázi.")
       logger.error(e.message)
@@ -86,10 +83,10 @@ export class Main {
       const {
         user: { username, discriminator },
       } = this.client
-      !this.testing &&
-        logger.info(
-          `Úspěšně přihlášen na Discord jako ${username}#${discriminator}`
-        )
+
+      logger.info(
+        `Úspěšně přihlášen na Discord jako ${username}#${discriminator}`
+      )
     } catch (e) {
       logger.error("Stala se chyba během přihlašování.")
       logger.error(e)
@@ -165,7 +162,7 @@ export class Main {
   }
 }
 
-const main = new Main(false)
+const main = new Main()
 main.init()
 
 export default main

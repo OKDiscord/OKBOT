@@ -48,7 +48,11 @@ class Clear {
         }
 
         const deletedMessage = await message.channel.send(
-          createSimple("Úspěch", `Vyčistil jsem ${Number(args[0])} zpráv.`)
+          createSimpleMention(
+            "Úspěch",
+            `vyčistil jsem ${Number(args[0])} zpráv.`,
+            message.author
+          )
         )
         return setTimeout(async () => await deletedMessage.delete(), 5000)
       },
