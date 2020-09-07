@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Main } from "../../Main"
 import { Command } from "../../types/Command"
 

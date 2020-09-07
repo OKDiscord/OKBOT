@@ -1,11 +1,13 @@
 type Difference = {
-    ms: number,
-    seconds: number,
-    minutes: number,
-    hours: number
+  ms: number
+  seconds: number
+  minutes: number
+  hours: number
 }
 type TestFunction = (callback: TestCallback) => unknown
-type TestCallback = (callback: (start: number, end: number, difference: Difference) => unknown) => unknown
+type TestCallback = (
+  callback: (start: number, end: number, difference: Difference) => unknown
+) => unknown
 
 export const benchFunction = (test: TestFunction) => {
   const start = +new Date()

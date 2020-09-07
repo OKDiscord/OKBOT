@@ -1,6 +1,6 @@
 import { Command } from "../../types/Command"
 import { TextChannel } from "discord.js"
-import { createSimple, createSimpleMention } from "../../utils/EmbedUtils"
+import { createSimpleMention } from "../../utils/EmbedUtils"
 class Clear {
   constructor() {
     return {
