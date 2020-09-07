@@ -1,11 +1,11 @@
 import { createDefault } from "../../utils/EmbedUtils"
 import config from "../../../config"
-import { Main, Command } from "../../Main"
+import { Command } from "../../types/Command"
 class Help {
   constructor() {
     return {
       name: "help",
-      description: "Help vypíše všechny dostupné příkazy.",
+      description: ["Help vypíše všechny dostupné příkazy.", "Použití: help."],
       run: async (message, { discord: { commands } }) => {
         const helpEmbed = createDefault().setTitle("Help")
 

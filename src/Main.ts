@@ -7,6 +7,9 @@ import path from "path"
 import config from "../config"
 
 import { createLogger, format, transports } from "winston"
+import { Command } from "./types/Command"
+import { Event } from "./types/Event"
+import { EnvironmentType } from "./types/Misc"
 
 const loggerFormat = format.printf(({ level, message, timestamp }) => {
   return `${timestamp} | ${level}: ${message}`
@@ -34,24 +37,6 @@ export const logger = createLogger({
   ],
 })
 
-type EnvironmentType = "development" | "production"
-
-// /{args, discord: { instance: this.client, commands: this.commands }}
-
-export type CommandContext = {
-  args: String[]
-  discord: {
-    instance: Discord.Client
-    commands: Command[]
-  }
-}
-
-export type Command = {
-  name: string
-  description?: string
-  run: (message: Discord.Message, context: CommandContext) => any
-}
-
 //Main
 export class Main {
   // Variables
@@ -60,11 +45,8 @@ export class Main {
 
   commands: Command[] = []
 
-  testing: boolean
-
-  constructor(testing?: boolean) {
+  constructor() {
     this.client = new Discord.Client()
-    this.testing = testing || false
   }
 
   async init() {
@@ -83,10 +65,11 @@ export class Main {
         useUnifiedTopology: true,
         entities: [path.join(__dirname, "db", "entity", "*.ts")],
       })
-      !this.testing && logger.info("Úspěšně připojeno k databázi.")
+      logger.info("Úspěšně připojeno k databázi.")
     } catch (e) {
       logger.error("Stala se chyba během připojování k databázi.")
-      logger.error(e)
+      logger.error(e.message)
+      process.exit(1)
     }
   }
 
@@ -100,10 +83,10 @@ export class Main {
       const {
         user: { username, discriminator },
       } = this.client
-      !this.testing &&
-        logger.info(
-          `Úspěšně přihlášen na Discord jako ${username}#${discriminator}`
-        )
+
+      logger.info(
+        `Úspěšně přihlášen na Discord jako ${username}#${discriminator}`
+      )
     } catch (e) {
       logger.error("Stala se chyba během přihlašování.")
       logger.error(e)
@@ -113,49 +96,56 @@ export class Main {
 
   async initCommands() {
     const commandsPath = path.join(__dirname, "discord", "commands", "*.ts")
-    await glob(commandsPath, async (err, files) => {
-      if (err) {
+    await glob(commandsPath, async (e, files) => {
+      if (e) {
         logger.error("Nelze načíst příkazy.")
-        logger.error(err)
+        logger.error(e)
         process.exit(1)
       }
 
       for (const file of files) {
-        const command = await import(file)
-        if (typeof command.default === "function") {
-          this.commands.push(command.default())
+        const cmd = await import(file)
+        if (typeof cmd.default === "function") {
+          const command: Command = cmd.default()
+          if (command.description) {
+            if (command.description instanceof Array) {
+              command.description = (command.description as Array<string>).join(
+                "\n"
+              )
+            }
+          }
+          this.commands.push(command)
         }
       }
     })
   }
 
   async initDiscordEvents() {
-    this.client.on("message", async (message) => {
-      if (!message.cleanContent.startsWith(config.prefix) || !message.guild)
-        return
-
-      const args = message.cleanContent
-        .slice(config.prefix.length)
-        .trim()
-        .split(" ")
-      const commandName = args.shift().toLowerCase()
-
-      for (const command of this.commands) {
-        if (command.name === commandName) {
-          const context = {
-            args,
-            discord: { instance: this.client, commands: this.commands },
-          }
-          await command.run(message, context)
-          return
-        }
+    const eventsPath = path.join(__dirname, "discord", "events", "*.ts")
+    await glob(eventsPath, async (e, files) => {
+      if (e) {
+        logger.error("Nelze načíst eventy.")
+        logger.error(e)
+        process.exit(1)
       }
 
-      message.reply("toto není příkaz!")
-    })
-
-    this.client.on("disconnect", () => {
-      logger.error("got diconnected!")
+      for (const file of files) {
+        const evt = await import(file)
+        if (typeof evt.default === "function") {
+          const event: Event<keyof Discord.ClientEvents> = evt.default()
+          this.client.on(event.listensTo, (...args) => {
+            const context = {
+              discord: {
+                instance: this.client,
+                commands: this.commands,
+              },
+              eventName: event.listensTo,
+              args,
+            }
+            return event.run(context)
+          })
+        }
+      }
     })
   }
 
@@ -172,4 +162,7 @@ export class Main {
   }
 }
 
-export default Main
+const main = new Main()
+main.init()
+
+export default main
