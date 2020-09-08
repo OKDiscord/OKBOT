@@ -22,6 +22,17 @@ class Command {
 
         for (const command of context.discord.commands) {
           if (command.name === commandName) {
+            if (command.permissible) {
+              const { roles, all } = command.permissible
+              const { array: roleCache } = message.member.roles.cache
+
+              const allowed = all
+                ? roleCache().every((item) => roles.includes(item.id))
+                : roleCache().some((item) => roles.includes(item.id))
+              if (!allowed)
+                return await message.reply("na tento příkaz nemáš oprávnění!")
+            }
+
             const commandContext: CommandContext = {
               args,
               discord: context.discord,
