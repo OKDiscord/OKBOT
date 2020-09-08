@@ -8,7 +8,7 @@ export interface CommandContext extends Context {
 export interface Command {
   name: string
   description?: string | Array<string>
-  permissionable?: {
+  permissible?: {
     roles: Snowflake[], // roles
     all: boolean // whether all roles have to be present, or just one of them
   }
