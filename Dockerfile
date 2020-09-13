@@ -1,18 +1,12 @@
-# Images
-FROM node:12.18.3-stretch
+FROM node:12
 
-# Maintainer
-LABEL maintainer OKDiscord
+WORKDIR /app
 
-# Bot folder
-RUN mkdir -p /usr/src/okbot
-WORKDIR /usr/src/okbot
+COPY package.json ./
+COPY yarn.lock ./
 
-# Bot files
-COPY . /usr/src/okbot
-
-# System dependencies
-RUN apt update && apt upgrade -y && apt install git python -y
-
-# Yarn dependencies
 RUN yarn
+
+COPY . .
+
+CMD ["yarn", "start"]
