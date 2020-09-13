@@ -1,12 +1,17 @@
 version: "3.8"
 services:
   bot:
-    container_name: okbot_discord
-    restart: always
-    build:
-      context: "."
-      dockerfile: Dockerfile
+    build: .
+    env_file:
+      - .env
+  db:
+    image: "mongo"
+    expose:
+      - "27017"
     volumes:
-      - .:/usr/src/okbot
-      - /usr/src/okbot/node_modules
-    command: yarn start
+      - mongo-data:/db
+    env_file:
+      - .env
+
+volumes:
+  mongo-data:

@@ -9,7 +9,7 @@ export interface Command {
   name: string
   description?: string | Array<string>
   permissible?: {
-    roles: Snowflake[], // roles
+    roles: Snowflake[] // roles
     all: boolean // whether all roles have to be present, or just one of them
   }
   run: (message: Message, context: CommandContext) => unknown
