@@ -25,7 +25,7 @@ class Announce {
             )
           )
 
-        const content = shiftMany(message.cleanContent.split(" "), 3).join(" ")
+        const content = shiftMany(message.content.split(" "), 3).join(" ")
 
         if (!content)
           return await message.channel.send(
