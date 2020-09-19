@@ -10,10 +10,21 @@ import { createLogger, format, transports } from "winston"
 import { Command } from "./types/Command"
 import { Event } from "./types/Event"
 import { EnvironmentType } from "./types/Misc"
+import fastify, { FastifyInstance } from "fastify"
+import { IncomingMessage, Server, ServerResponse } from "http"
+import fastifyCors from "fastify-cors"
+import AnnounceController from "./http/controllers/AnnounceController"
+import InfoController from "./http/controllers/InfoController"
 
 const loggerFormat = format.printf(({ level, message, timestamp }) => {
   return `${timestamp} | ${level}: ${message}`
 })
+
+export type DefaultFastify = FastifyInstance<
+  Server,
+  IncomingMessage,
+  ServerResponse
+>
 
 export const logger = createLogger({
   transports: [
@@ -43,6 +54,8 @@ export class Main {
   client: Discord.Client
   db: Connection
 
+  server: DefaultFastify = fastify()
+
   commands: Command[] = []
 
   constructor() {
@@ -55,6 +68,7 @@ export class Main {
     await this.initDiscord()
     await this.initCommands()
     await this.initDiscordEvents()
+    await this.initFastify()
   }
   async initDatabase() {
     try {
@@ -147,6 +161,19 @@ export class Main {
         }
       }
     })
+  }
+
+  async initFastify() {
+    this.server.register(fastifyCors)
+    this.server.register(InfoController)
+    this.server.register(AnnounceController)
+    try {
+      await this.server.listen(4000)
+      logger.info("Fastify úspěšně spuštěno na portu 4000")
+    } catch (e) {
+      logger.error("Došlo k chybě při spouštění Fastify na portu 4000")
+      logger.error(e.message)
+    }
   }
 
   static env() {
