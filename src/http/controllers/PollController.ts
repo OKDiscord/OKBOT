@@ -1,7 +1,7 @@
 import fp from "fastify-plugin"
 import main, { DefaultFastify } from "../../Main"
 import * as PS from "../schemas/PollSchema"
-import { TextChannel, Message, Emoji } from "discord.js"
+import { TextChannel } from "discord.js"
 import { sendPoll } from "../../common/sendPoll"
 
 export default fp(
