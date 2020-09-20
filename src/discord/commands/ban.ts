@@ -3,8 +3,8 @@ import { Command } from "../../types/Command"
 import {
   createSimpleMention,
   createSimpleMultiline,
-  mention,
 } from "../../utils/EmbedUtils"
+import { asMention } from "../../utils/DiscordUtils"
 
 class Ban {
   constructor() {
@@ -63,7 +63,7 @@ class Ban {
           // Zdravím, ale naneštěstí jsi byl zabanován na Okeyku!\nZodpovědný moderátor: ${message.author.username}
           await toBan.send(
             createSimpleMultiline("Zabanován", [
-              `Zdravím, ${mention(toBan.user)}`,
+              `Zdravím, ${asMention(toBan.user)}`,
               "",
               "Naneštěstí jsi byl zabanován na Okeyku!",
               `Zodpovědný moderátor: ${message.author.username}#${message.author.discriminator}`,
