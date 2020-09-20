@@ -1,12 +1,17 @@
-import { MessageEmbed, User } from "discord.js"
+import { MessageEmbed, User, EmbedFieldData } from "discord.js"
 import { Main } from "../Main"
+import { asMention } from "./DiscordUtils"
+
+export const createWithFields = (title: string, fields: EmbedFieldData[]) => {
+  return createDefault().setTitle(title).addFields(fields)
+}
 
 export const createSimpleMention = (
   title: string,
   subtitle: string,
   user: User
 ) => {
-  return createSimple(title, `${mention(user)}, ${subtitle}`)
+  return createSimple(title, `${asMention(user)}, ${subtitle}`)
 }
 
 export const createSimpleMultilineMention = (
@@ -14,16 +19,12 @@ export const createSimpleMultilineMention = (
   subtitle: string[],
   user: User
 ) => {
-  subtitle[0] = `${mention(user)}, ${subtitle[0]}`
+  subtitle[0] = `${asMention(user)}, ${subtitle[0]}`
   return createSimpleMultiline(title, subtitle)
 }
 
 export const createSimple = (title: string, subtitle: string) => {
   return createDefault().setTitle(title).setDescription(subtitle)
-}
-
-export const mention = (user: User) => {
-  return `<@${user.id}>`
 }
 
 export const createSimpleMultiline = (title, subtitle: string[]) => {

@@ -15,6 +15,7 @@ import { IncomingMessage, Server, ServerResponse } from "http"
 import fastifyCors from "fastify-cors"
 import AnnounceController from "./http/controllers/AnnounceController"
 import InfoController from "./http/controllers/InfoController"
+import PollController from "./http/controllers/PollController"
 
 const loggerFormat = format.printf(({ level, message, timestamp }) => {
   return `${timestamp} | ${level}: ${message}`
@@ -167,8 +168,9 @@ export class Main {
     this.server.register(fastifyCors)
     this.server.register(InfoController)
     this.server.register(AnnounceController)
+    this.server.register(PollController)
     try {
-      await this.server.listen(4000)
+      await this.server.listen(4000, "0.0.0.0")
       logger.info("Fastify úspěšně spuštěno na portu 4000")
     } catch (e) {
       logger.error("Došlo k chybě při spouštění Fastify na portu 4000")
