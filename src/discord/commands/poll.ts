@@ -1,6 +1,5 @@
 import { Command } from "../../types/Command"
 import { shiftMany } from "../../utils/ArrayUtils"
-import { createWithFields } from "../../utils/EmbedUtils"
 import { sendPoll } from "../../common/sendPoll"
 
 class Poll {
