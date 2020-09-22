@@ -66,7 +66,7 @@ class Warn {
           )
           await message.channel.send(embed)
         } else {
-          const newWarn = await WarnProfile.create({
+          await WarnProfile.create({
             userId: toWarn.id,
             warnings: 1,
           })
