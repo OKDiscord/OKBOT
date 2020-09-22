@@ -1,6 +1,5 @@
-import { WarnProfile } from "../../db/entity/WarnProfile"
+import { WarnProfile } from "../../db/EntityManager"
 import { Command } from "../../types/Command"
-import { getMongoManager } from "typeorm"
 import { createSimpleMultiline } from "../../utils/EmbedUtils"
 
 class Warn {
@@ -29,8 +28,7 @@ class Warn {
           return await message.reply("sám sebe nedokážu varovat!")
 
         const toWarn = message.mentions.members.first()
-        const warnProfile = getMongoManager().getMongoRepository(WarnProfile)
-        const isThere = await warnProfile.findOne({
+        const isThere = await WarnProfile.findOne({
           where: { userId: toWarn.id },
         })
         if (isThere) {
@@ -44,8 +42,7 @@ class Warn {
               ]
             )
             await message.channel.send(embed)
-            isThere.warnings = 0
-            await warnProfile.save(isThere)
+            await isThere.update({ warnings: 0 })
             return
           } else if (isThere.warnings >= 3) {
             const embed = createSimpleMultiline(
@@ -56,8 +53,7 @@ class Warn {
             )
             return await message.channel.send(embed)
           }
-          isThere.warnings = isThere.warnings + 1
-          await warnProfile.save(isThere)
+          await isThere.update({ warnings: isThere.warnings + 1 })
           //   message.channel.send(`<@${toWarn.id}> byl/a úspěšně varován/a!\nZodpovědný moderátor: <@${message.author.id}>!\nPočet varování: ${isThere.warnings}`)
           const embed = createSimpleMultiline(
             `Warning | ${toWarn.user.username}`,
@@ -70,8 +66,10 @@ class Warn {
           )
           await message.channel.send(embed)
         } else {
-          const newWarn = warnProfile.create({ userId: toWarn.id, warnings: 1 })
-          await warnProfile.save(newWarn)
+          const newWarn = await WarnProfile.create({
+            userId: toWarn.id,
+            warnings: 1,
+          })
           const embed = createSimpleMultiline(
             `Warning | ${toWarn.user.username}`,
             [

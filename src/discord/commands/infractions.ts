@@ -1,6 +1,5 @@
 import { Command } from "../../types/Command"
-import { getMongoManager } from "typeorm"
-import { WarnProfile } from "../../db/entity/WarnProfile"
+import { WarnProfile } from "../../db/EntityManager"
 class Infractions {
   constructor() {
     return {
@@ -12,9 +11,8 @@ class Infractions {
       run: async (message) => {
         if (message.mentions.members.size == 0)
           return await message.reply("nevím, koho mám zobrazit!")
-        const warnProfile = getMongoManager().getMongoRepository(WarnProfile)
-        const isThere = await warnProfile.findOne({
-          where: { userId: message.mentions.members.first().id },
+        const isThere = await WarnProfile.findOne({
+          userId: message.mentions.members.first().id,
         })
         if (isThere) {
           return await message.channel.send(

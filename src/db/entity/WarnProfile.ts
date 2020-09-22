@@ -1,14 +1,15 @@
-import { Column, Entity, ObjectID, ObjectIdColumn, Unique } from "typeorm"
+import { prop } from "@typegoose/typegoose"
+import { Types } from "mongoose"
 
-@Entity()
-@Unique(["userId"])
 export class WarnProfile {
-  @ObjectIdColumn()
-  id: ObjectID
+  // Type-hinting
+  _id: Types.ObjectId
+  id?: string
+  __v: number
 
-  @Column()
-  userId: string
+  @prop({ unique: true, required: true })
+  userId!: string
 
-  @Column({ default: 0 })
-  warnings: number
+  @prop({ required: true, default: 0 })
+  warnings = 0
 }
