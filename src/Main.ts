@@ -1,11 +1,11 @@
 //Libs mad
 import * as Discord from "discord.js"
-import { createConnection, Connection } from "typeorm"
 import glob from "glob"
 import fs from "fs"
 import path from "path"
 import config from "../config"
 
+import { connect as connectDb, Mongoose } from "mongoose"
 import { createLogger, format, transports } from "winston"
 import { Command } from "./types/Command"
 import { Event } from "./types/Event"
@@ -53,7 +53,7 @@ export const logger = createLogger({
 export class Main {
   // Variables
   client: Discord.Client
-  db: Connection
+  db: Mongoose
 
   server: DefaultFastify = fastify()
 
@@ -73,12 +73,9 @@ export class Main {
   }
   async initDatabase() {
     try {
-      this.db = await createConnection({
-        type: "mongodb",
-        url: config.mongoUri,
+      this.db = await connectDb(config.mongoUri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        entities: [path.join(__dirname, "db", "entity", "*.ts")],
       })
       logger.info("Úspěšně připojeno k databázi.")
     } catch (e) {
