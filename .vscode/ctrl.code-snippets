@@ -1,0 +1,18 @@
+{
+  "Controller for Fastify": {
+    "prefix": "ctrl",
+    "body": [
+      "import fp from \"fastify-plugin\"",
+      "import { DefaultFastify } from \"../../Main\"",
+      "",
+      "export default fp(",
+      "  (server: DefaultFastify, options: unknown, next: () => unknown) => {",
+      "    $1",
+      "",
+      "    next()",
+      "  }",
+      ")"
+    ],
+    "description": "Controller for Fastify"
+  }
+}
