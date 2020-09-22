@@ -10,6 +10,7 @@ export class WarnProfile {
   @prop({ unique: true, required: true })
   userId!: string
 
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   @prop({ required: true, default: 0 })
-  warnings = 0
+  warnings: number = 0
 }
