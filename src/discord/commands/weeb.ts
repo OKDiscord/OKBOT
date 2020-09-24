@@ -1,5 +1,4 @@
 import { logger } from "@typegoose/typegoose/lib/logSettings"
-import { create } from "domain"
 import { Command } from "../../types/Command"
 import { createSimple } from "../../utils/EmbedUtils"
 
