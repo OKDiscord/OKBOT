@@ -35,7 +35,7 @@ export default fp(
       }
     )
 
-    server.get("/auth/discord-url", async (_, res) => {
+    server.get("/auth/discord-oauth", async (_, res) => {
       return await res.send({
         success: true,
         state: "provided",
