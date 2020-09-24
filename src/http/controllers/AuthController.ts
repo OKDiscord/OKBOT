@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import fp from "fastify-plugin"
 import { User } from "../../db/EntityManager"
 import { DefaultFastify } from "../../Main"
@@ -10,6 +11,7 @@ import {
 import * as argon2 from "argon2"
 import Jwt from "../helpers/Jwt"
 import config from "../../../config"
+import Axios from "axios"
 
 export default fp(
   (server: DefaultFastify, options: unknown, next: () => unknown) => {
@@ -47,7 +49,32 @@ export default fp(
     server.post<DiscordAuth>(
       "/auth/discord-authorize",
       { schema: discordAuth },
-      async (_, res) => {
+      async (req, res) => {
+        const { code } = req.body
+
+        // FIXME: fix the shit below
+        // try {
+        //   const result = await Axios.request({
+        //     url: "https://discord.com/api/v6/oauth2/token",
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "x-www-form-urlencoded",
+        //     },
+        //     data: {
+        //       client_id: "718157922336768021",
+        //       client_secret: config.discordSecret,
+        //       grant_type: "authorization_code",
+        //       code,
+        //       scope: "identify guilds",
+        //     },
+        //   })
+        //   console.log(result)
+        // } catch (e) {
+        //   console.log(e.response)
+        // }
+
+        // console.log(result)
+
         return await res.send({
           success: false,
           state: "not_implemented_yet",
