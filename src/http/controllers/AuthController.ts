@@ -13,6 +13,7 @@ import Jwt from "../helpers/Jwt"
 import config from "../../../config"
 import Axios from "axios"
 import queryString from "querystring"
+import main from "../../Main"
 
 export default fp(
   (server: DefaultFastify, options: unknown, next: () => unknown) => {
@@ -54,32 +55,61 @@ export default fp(
         const { code } = req.body
 
         // FIXME: fix the shit below
-        try {
-          const result = await Axios.request({
-            url: "https://discord.com/api/v6/oauth2/token",
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            data: queryString.encode({
-              client_id: "718157922336768021",
-              client_secret: config.discord.clientSecret,
-              grant_type: "authorization_code",
-              code,
-              scope: "identify guilds",
-              redirect_uri: "http://89.176.241.227:8080/bot-authorize",
-            }),
-          })
-          console.log(result)
-        } catch (e) {
-          console.log(e.response)
+
+        const { data } = await Axios.request({
+          url: "https://discord.com/api/v6/oauth2/token",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          data: queryString.encode({
+            client_id: "718157922336768021",
+            client_secret: config.discord.clientSecret,
+            grant_type: "authorization_code",
+            code,
+            scope: "identify guilds",
+            redirect_uri: "http://89.176.241.227:8080/bot-authorize",
+          }),
+        })
+        // console.log(data)
+
+        if (typeof data.error === "string") {
+          let error = "unknown"
+          switch (data.error_description) {
+            case 'Invalid "code" in request.':
+              error = "invalid_code"
+              break
+            default:
+              error = "unknown"
+              break
+          }
+
+          return await res
+            .status(400)
+            .send({ success: false, state: `err_${error}` })
         }
 
-        // console.log(result)
+        const me = await Axios.request({
+          method: "GET",
+          url: "https://discord.com/api/v6/users/@me",
+          headers: { Authorization: `Bearer ${data.access_token}` },
+        })
+
+        if (!me) return // error: cant obtain id
+
+        const guild = main.client.guilds.cache.find(
+          (el) => el.id === config.guildId
+        )
+        if (!guild) return // error: bot not on server
+
+        const hasUser = guild.members.cache
+          .array()
+          .some((el) => el.id === me.id)
+        if (!hasUser) return // error: user not on server
 
         return await res.send({
           success: false,
-          state: "not_implemented_yet",
+          message: "not_implemented_yet",
         })
       }
     )
