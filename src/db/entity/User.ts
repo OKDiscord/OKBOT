@@ -22,4 +22,7 @@ export class User {
 
   @prop({ required: true, unique: true })
   discordId!: string
+
+  @prop({ required: true })
+  refreshToken!: string
 }
