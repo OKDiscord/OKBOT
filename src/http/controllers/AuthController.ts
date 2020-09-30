@@ -12,6 +12,7 @@ import * as argon2 from "argon2"
 import Jwt from "../helpers/Jwt"
 import config from "../../../config"
 import Axios from "axios"
+import queryString from "querystring"
 
 export default fp(
   (server: DefaultFastify, options: unknown, next: () => unknown) => {
@@ -53,25 +54,26 @@ export default fp(
         const { code } = req.body
 
         // FIXME: fix the shit below
-        // try {
-        //   const result = await Axios.request({
-        //     url: "https://discord.com/api/v6/oauth2/token",
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "x-www-form-urlencoded",
-        //     },
-        //     data: {
-        //       client_id: "718157922336768021",
-        //       client_secret: config.discordSecret,
-        //       grant_type: "authorization_code",
-        //       code,
-        //       scope: "identify guilds",
-        //     },
-        //   })
-        //   console.log(result)
-        // } catch (e) {
-        //   console.log(e.response)
-        // }
+        try {
+          const result = await Axios.request({
+            url: "https://discord.com/api/v6/oauth2/token",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            data: queryString.encode({
+              client_id: "718157922336768021",
+              client_secret: config.discord.clientSecret,
+              grant_type: "authorization_code",
+              code,
+              scope: "identify guilds",
+              redirect_uri: "http://89.176.241.227:8080/bot-authorize",
+            }),
+          })
+          console.log(result)
+        } catch (e) {
+          console.log(e.response)
+        }
 
         // console.log(result)
 
