@@ -1,12 +1,7 @@
 import { prop } from "@typegoose/typegoose"
-import { Types } from "mongoose"
+import { MongoEntity } from "../IEntity"
 
-export class WarnProfile {
-  // Type-hinting
-  _id: Types.ObjectId
-  id?: string
-  __v: number
-
+export class WarnProfile extends MongoEntity {
   @prop({ unique: true, required: true })
   userId!: string
 

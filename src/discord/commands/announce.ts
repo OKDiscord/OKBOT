@@ -6,6 +6,8 @@ import {
 } from "../../utils/EmbedUtils"
 import { shiftMany } from "../../utils/ArrayUtils"
 class Announce {
+  name = "Helll"
+
   constructor() {
     return {
       name: "announce",
