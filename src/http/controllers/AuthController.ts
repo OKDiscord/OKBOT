@@ -89,7 +89,7 @@ export default fp(
             .send({ success: false, state: `err_${error}` })
         }
 
-        const me = await Axios.request({
+        const me = await Axios.request<any>({
           method: "GET",
           url: "https://discord.com/api/v6/users/@me",
           headers: { Authorization: `Bearer ${data.access_token}` },
@@ -104,7 +104,7 @@ export default fp(
 
         const hasUser = guild.members.cache
           .array()
-          .some((el) => el.id === me.id)
+          .some((el) => el.id === (me as any).id)
         if (!hasUser) return // error: user not on server
 
         return await res.send({

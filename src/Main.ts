@@ -120,13 +120,6 @@ export class Main {
         const cmd = await import(file)
         if (typeof cmd.default === "function") {
           const command: Command = cmd.default()
-          if (command.description) {
-            if (command.description instanceof Array) {
-              command.description = (command.description as Array<string>).join(
-                "\n"
-              )
-            }
-          }
           this.commands.push(command)
         }
       }
@@ -142,22 +135,41 @@ export class Main {
         process.exit(1)
       }
 
+      const createEvent = <
+        E extends keyof Discord.ClientEvents = keyof Discord.ClientEvents
+      >(
+        evt: Event<E>
+      ) => {
+        this.client.on(evt.listensTo, (...args) => {
+          const context = {
+            discord: {
+              instance: this.client,
+              commands: this.commands,
+            },
+            eventName: evt.listensTo,
+            args,
+          }
+          return evt.run(context)
+        })
+      }
+
       for (const file of files) {
         const evt = await import(file)
+        let event: Event<keyof Discord.ClientEvents>
         if (typeof evt.default === "function") {
-          const event: Event<keyof Discord.ClientEvents> = evt.default()
-          this.client.on(event.listensTo, (...args) => {
-            const context = {
-              discord: {
-                instance: this.client,
-                commands: this.commands,
-              },
-              eventName: event.listensTo,
-              args,
-            }
-            return event.run(context)
-          })
-        }
+          logger.warn(
+            `Event ${
+              path.parse(file).base
+            } is using the deprecated Class-like event. Consider switching to the Functional event.`
+          )
+          event = evt.default()
+        } else if (typeof evt.default === "object") {
+          event = evt.default
+          if (!event.listensTo || !event.run) continue
+        } else continue
+
+        logger.info(`Registering event ${path.parse(file).base}`)
+        createEvent(event)
       }
     })
   }

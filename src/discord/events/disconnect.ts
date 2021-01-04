@@ -1,15 +1,9 @@
 import { logger } from "../../Main"
-import { Event } from "../../types/Event"
+import { makeEvent } from "../../types/Event"
 
-class Disconnect {
-  constructor() {
-    return {
-      listensTo: "disconnect",
-      run: () => {
-        return logger.error("got disconnected from discord.")
-      },
-    } as Event<"disconnect">
-  }
-}
-
-export default Disconnect
+export default makeEvent({
+  listensTo: "disconnect",
+  run: () => {
+    return logger.error("got disconnected from discord.")
+  },
+})
