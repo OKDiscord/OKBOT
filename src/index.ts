@@ -9,7 +9,6 @@ import { connect as connectDb, Mongoose } from "mongoose"
 import { createLogger, format, transports } from "winston"
 import { Command } from "./types/command"
 import { Event } from "./types/event"
-import { Fasteer, hookFastify } from "@fasteerjs/fasteer"
 import { Context, EnvironmentType } from "./types"
 
 const loggerFormat = format.printf(({ level, message, timestamp }) => {
@@ -43,14 +42,12 @@ export class Main {
   client: Discord.Client
   db: Mongoose
 
-  server: Fasteer.Fasteer
   commands: Command[] = []
 
   ctx = (): Context => ({
     client: this.client,
     db: this.db,
     commands: this.commands,
-    server: this.server,
   })
 
   constructor() {
@@ -63,7 +60,6 @@ export class Main {
     await this.initDiscord()
     await this.initCommands()
     await this.initDiscordEvents()
-    await this.initFastify()
   }
 
   async initDatabase() {
@@ -157,30 +153,6 @@ export class Main {
         }
         return evt.run(context)
       })
-    }
-  }
-
-  async initFastify() {
-    this.server = hookFastify({
-      controllers: ["ts", "js"].map((ext) =>
-        path.join(__dirname, "http", "controllers", `*Controller.${ext}`)
-      ),
-      port: 4200,
-      host: "0.0.0.0",
-      cors: {
-        origin: Main.env() === "development" ? "*" : "https://*.okdiscord.fun",
-      },
-      helmet: true,
-      globalPrefix: "/api",
-      development: Main.env() === "development",
-      logRequests: true,
-      logErrors: true,
-      controllerContext: this.ctx(),
-    })
-    try {
-      await this.server.listen()
-    } catch (e) {
-      console.log(e)
     }
   }
 
