@@ -1,10 +1,10 @@
 import { logger } from "../../Main"
-import { makeCommand } from "../../types/Command"
+import { makeCommand } from "../../hooks/commands"
 import {
   createSimpleMention,
   createSimpleMultiline,
-} from "../../utils/EmbedUtils"
-import { asMention } from "../../utils/DiscordUtils"
+} from "../../utils/embedUtils"
+import { asMention } from "../../utils/discordUtils"
 
 export default makeCommand({
   name: "ban",

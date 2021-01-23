@@ -1,6 +1,6 @@
-import { makeCommand } from "../../types/Command"
-import { shiftMany } from "../../utils/ArrayUtils"
-import { sendPoll } from "../../common/sendPoll"
+import { makeCommand } from "../../hooks/commands"
+import { shiftMany } from "../../utils/arrayUtils"
+import { sendPoll } from "../../hooks/polls/sendPoll"
 
 export default makeCommand({
   name: "poll",

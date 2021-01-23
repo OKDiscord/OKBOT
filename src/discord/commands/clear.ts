@@ -1,6 +1,6 @@
-import { makeCommand } from "../../types/Command"
+import { makeCommand } from "../../hooks/commands"
 import { TextChannel } from "discord.js"
-import { createSimpleMention } from "../../utils/EmbedUtils"
+import { createSimpleMention } from "../../utils/embedUtils"
 
 export default makeCommand({
   name: "clear",

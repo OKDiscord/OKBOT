@@ -1,6 +1,6 @@
 import { WarnProfile } from "../../db/EntityManager"
-import { makeCommand } from "../../types/Command"
-import { createSimpleMultiline } from "../../utils/EmbedUtils"
+import { makeCommand } from "../../hooks/commands"
+import { createSimpleMultiline } from "../../utils/embedUtils"
 
 export default makeCommand({
   name: "warn",

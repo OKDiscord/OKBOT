@@ -1,4 +1,4 @@
-import { makeCommand } from "../../types/Command"
+import { makeCommand } from "../../hooks/commands"
 import config from "../../../config"
 
 export default makeCommand({

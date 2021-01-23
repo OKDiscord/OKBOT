@@ -1,5 +1,4 @@
 import { pre, prop } from "@typegoose/typegoose"
-import { Types } from "mongoose"
 import * as argon2 from "argon2"
 import { MongoEntity } from "../IEntity"
 
@@ -9,7 +8,6 @@ import { MongoEntity } from "../IEntity"
   next()
 })
 export class User extends MongoEntity {
-
   @prop({ unique: true, required: true })
   username!: string
 

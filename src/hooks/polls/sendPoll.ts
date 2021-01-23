@@ -1,6 +1,6 @@
 import { TextChannel } from "discord.js"
-import { createDefault } from "../utils/EmbedUtils"
-import NumberEmotes from "../misc/NumberEmotes"
+import { createDefault } from "../../utils/embedUtils"
+import NumberEmotes from "../../misc/NumberEmotes"
 
 export const sendPoll = async (
   channel: TextChannel,

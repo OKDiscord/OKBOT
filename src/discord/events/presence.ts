@@ -1,12 +1,11 @@
 import config from "../../../config"
-import { makeEvent } from "../../types/Event"
+import { makeEvent } from "../../hooks/events"
 
 export default makeEvent({
   listensTo: "presenceUpdate",
-  run: async (context) => {
-    const newPresence = context.args[1]
+  run: async ({ args: [newPresence], client }) => {
     if (!newPresence.activities || newPresence.activities.length === 0) {
-      return await context.discord.instance.user.setPresence({
+      return await client.user.setPresence({
         activity: { name: `${config.prefix}help` },
         status: "online",
       })

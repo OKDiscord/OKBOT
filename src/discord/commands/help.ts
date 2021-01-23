@@ -1,14 +1,14 @@
-import { createDefault } from "../../utils/EmbedUtils"
+import { createDefault } from "../../utils/embedUtils"
 import config from "../../../config"
-import { Command, makeCommand } from "../../types/Command"
+import { makeCommand } from "../../hooks/commands"
 
 export default makeCommand({
   name: "help",
   description: ["Help vypíše všechny dostupné příkazy.", "Použití: help."],
-  run: async (message, { discord: { commands } }) => {
+  run: async (message, { commands }) => {
     const helpEmbed = createDefault().setTitle("Help")
 
-    for (const command of commands as Command[]) {
+    for (const command of commands) {
       const { array: roleCache } = message.member.roles.cache
 
       let allowed = true

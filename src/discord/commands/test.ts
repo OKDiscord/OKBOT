@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Main } from "../../Main"
-import { makeCommand } from "../../types/Command"
+import { makeCommand } from "../../hooks/commands"
 
 /**
  *

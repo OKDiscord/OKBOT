@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { Types } from "mongoose"
 
 export abstract class MongoEntity implements BaseEntity {
   // Type-hinting
@@ -7,4 +7,5 @@ export abstract class MongoEntity implements BaseEntity {
   __v: number
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface BaseEntity {}
