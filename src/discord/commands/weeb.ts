@@ -1,6 +1,6 @@
 import { logger } from "../../Main"
-import { makeCommand } from "../../types/Command"
-import { createSimple } from "../../utils/EmbedUtils"
+import { makeCommand } from "../../hooks/commands"
+import { createSimple } from "../../utils/embedUtils"
 
 export default makeCommand({
   name: "weeb",

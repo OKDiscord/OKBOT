@@ -17,9 +17,7 @@
     "camelcase": "error",
     "no-console": "warn",
     "no-extra-semi": "error",
-    "no-return-await": "off",
-    "require-await": "error",
-    "@typescript-eslint/return-await": ["error", "always"],
+    "@typescript-eslint/return-await": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 }

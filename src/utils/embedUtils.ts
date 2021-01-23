@@ -1,6 +1,6 @@
 import { MessageEmbed, User, EmbedFieldData } from "discord.js"
 import { Main } from "../Main"
-import { asMention } from "./DiscordUtils"
+import { asMention } from "./discordUtils"
 
 export const createWithFields = (title: string, fields: EmbedFieldData[]) => {
   return createDefault().setTitle(title).addFields(fields)

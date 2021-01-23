@@ -1,5 +1,5 @@
 import { logger } from "../../Main"
-import { makeCommand } from "../../types/Command"
+import { makeCommand } from "../../hooks/commands"
 
 export default makeCommand({
   name: "kick",

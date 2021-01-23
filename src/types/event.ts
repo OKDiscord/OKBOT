@@ -1,5 +1,5 @@
 import { ClientEvents } from "discord.js"
-import { Context } from "./Context"
+import { Context } from "./context"
 
 export interface EventContext<K extends keyof ClientEvents> extends Context {
   eventName: K

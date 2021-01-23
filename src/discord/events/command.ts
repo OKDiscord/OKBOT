@@ -1,10 +1,10 @@
-import { makeEvent } from "../../types/Event"
+import { makeEvent } from "../../hooks/events"
 import config from "../../../config"
-import { CommandContext } from "../../types/Command"
+import { CommandContext } from "../../types/command"
 
 export default makeEvent({
   listensTo: "message",
-  run: async ({ args: [message], discord }) => {
+  run: async ({ args: [message], ...ctx }) => {
     if (message.author.bot) return false
     if (!message.cleanContent.startsWith(config.prefix) || !message.guild)
       return false
@@ -13,7 +13,7 @@ export default makeEvent({
       .trim()
       .split(" ")
     const commandName = args.shift().toLowerCase()
-    for (const command of discord.commands) {
+    for (const command of ctx.commands) {
       if (command.name === commandName) {
         if (command.permissible) {
           const { roles, all } = command.permissible
@@ -26,7 +26,7 @@ export default makeEvent({
         }
         const commandContext: CommandContext = {
           args,
-          discord,
+          ...ctx,
         }
         return command.run(message, commandContext)
       }

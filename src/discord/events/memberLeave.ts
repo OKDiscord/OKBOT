@@ -1,5 +1,5 @@
 import config from "../../../config"
-import { makeEvent } from "../../types/Event"
+import { makeEvent } from "../../hooks/events"
 
 export default makeEvent({
   listensTo: "guildMemberRemove",

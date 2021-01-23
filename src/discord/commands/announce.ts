@@ -1,10 +1,10 @@
-import { makeCommand } from "../../types/Command"
+import { makeCommand } from "../../hooks/commands"
 import {
   createDefault,
   createSimpleMention,
   createSimpleMultilineMention,
-} from "../../utils/EmbedUtils"
-import { shiftMany } from "../../utils/ArrayUtils"
+} from "../../utils/embedUtils"
+import { shiftMany } from "../../utils/arrayUtils"
 
 export default makeCommand({
   name: "announce",
