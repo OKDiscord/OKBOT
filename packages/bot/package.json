@@ -36,6 +36,7 @@
   },
   "scripts": {
     "start": "ts-node .",
+    "compile": "tsc",
     "dev": "nodemon -e ts,js,json --exec ts-node .",
     "test": "mocha --timeout 20000 -r ts-node/register test/*.ts",
     "lint": "eslint . --ext .ts",

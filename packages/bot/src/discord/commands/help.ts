@@ -1,5 +1,5 @@
 import { createDefault } from "../../utils/embedUtils"
-import config from "../../../config"
+import { cfg } from "@okbot/core"
 import { makeCommand } from "../../hooks/commands"
 
 export default makeCommand({
@@ -23,7 +23,7 @@ export default makeCommand({
 
       if (allowed)
         helpEmbed.addField(
-          `${config.prefix}${command.name}`,
+          `${cfg.discord.prefix}${command.name}`,
           command.description || "Žádný popis"
         )
     }

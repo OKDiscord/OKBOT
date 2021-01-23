@@ -8,5 +8,8 @@
   "private": true,
   "dependencies": {
     "@fasteerjs/fasteer": "^1.0.9"
+  },
+  "scripts": {
+    "compile": "tsc"
   }
 }

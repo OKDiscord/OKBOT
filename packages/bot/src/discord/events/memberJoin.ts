@@ -1,4 +1,4 @@
-import config from "../../../config"
+import { cfg } from "@okbot/core"
 import { makeEvent } from "../../hooks/events"
 
 export default makeEvent({
@@ -9,7 +9,7 @@ export default makeEvent({
     } = context.args[0]
 
     const memberCountChannel = channels.cache.find(
-      (channel) => channel.id === config.memberCountChannelId
+      (channel) => channel.id === cfg.discord.channels.memberCount
     )
     if (!memberCountChannel) return false
 

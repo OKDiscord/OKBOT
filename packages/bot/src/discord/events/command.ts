@@ -1,15 +1,15 @@
 import { makeEvent } from "../../hooks/events"
-import config from "../../../config"
+import { cfg } from "@okbot/core"
 import { CommandContext } from "../../types/command"
 
 export default makeEvent({
   listensTo: "message",
   run: async ({ args: [message], ...ctx }) => {
     if (message.author.bot) return false
-    if (!message.cleanContent.startsWith(config.prefix) || !message.guild)
+    if (!message.cleanContent.startsWith(cfg.discord.prefix) || !message.guild)
       return false
     const args = message.cleanContent
-      .slice(config.prefix.length)
+      .slice(cfg.discord.prefix.length)
       .trim()
       .split(" ")
     const commandName = args.shift().toLowerCase()

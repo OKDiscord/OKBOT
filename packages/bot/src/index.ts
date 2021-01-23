@@ -3,7 +3,7 @@ import * as Discord from "discord.js"
 import { sync as glob } from "glob"
 import fs from "fs"
 import path from "path"
-import config from "../config"
+import { cfg } from "@okbot/core"
 
 import { connect as connectDb, Mongoose } from "mongoose"
 import { createLogger, format, transports } from "winston"
@@ -64,7 +64,7 @@ export class Main {
 
   async initDatabase() {
     try {
-      this.db = await connectDb(config.mongoUri, {
+      this.db = await connectDb(cfg.database(), {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       })
@@ -78,10 +78,10 @@ export class Main {
 
   async initDiscord() {
     try {
-      await this.client.login(config.token)
+      await this.client.login(cfg.discord.botToken())
 
       this.client.user.setPresence({
-        activity: { name: `${config.prefix}help` },
+        activity: { name: `${cfg.discord.prefix}help` },
         status: "online",
       })
 

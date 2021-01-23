@@ -3,5 +3,11 @@
   "version": "3.0.0",
   "main": "dist/index.js",
   "license": "UNLICENSED",
-  "private": true
+  "private": true,
+  "scripts": {
+    "compile": "tsc"
+  },
+  "dependencies": {
+    "@okbot/config": "^3.0.0"
+  }
 }

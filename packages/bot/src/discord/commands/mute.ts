@@ -1,5 +1,5 @@
 import { makeCommand } from "../../hooks/commands"
-import config from "../../../config"
+import { cfg } from "@okbot/core"
 
 export default makeCommand({
   name: "mute",
@@ -17,7 +17,7 @@ export default makeCommand({
       return await message.reply("nemám koho ztlumit!")
 
     const muteRole = message.guild.roles.cache.find(
-      (role) => role.id == config.muteRoleId
+      (role) => role.id == cfg.discord.roles.mute
     )
     if (!muteRole) return await message.reply("role na tlumení není dostupná!")
 
@@ -26,7 +26,7 @@ export default makeCommand({
     if (
       message.mentions.members
         .first()
-        .roles.cache.find((role) => role.id == config.muteRoleId)
+        .roles.cache.find((role) => role.id === cfg.discord.roles.mute)
     ) {
       target.roles.remove(muteRole)
       message.reply("uživatelovo ztlumení bylo zrušeno.")
