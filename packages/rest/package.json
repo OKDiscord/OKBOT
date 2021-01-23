@@ -1,0 +1,12 @@
+{
+  "name": "@okbot/rest",
+  "version": "1.0.0",
+  "description": "REST API for OKBOT",
+  "main": "dist/index.js",
+  "author": "OKDiscord Dev Team",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@fasteerjs/fasteer": "^1.0.9"
+  }
+}
