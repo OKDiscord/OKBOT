@@ -1,0 +1,6 @@
+{
+  "useTabs": false,
+  "semi": false,
+  "arrowParens": "avoid",
+  "tabWidth": 2
+}

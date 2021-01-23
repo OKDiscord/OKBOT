@@ -1,0 +1,12 @@
+.is-discord {
+  background-color: $discord;
+  &.is-lighter {
+    background-color: $discord-lighter;
+  }
+}
+.has-text-discord {
+  color: $discord;
+}
+.has-text-discord-lighter {
+  color: $discord-lighter;
+}

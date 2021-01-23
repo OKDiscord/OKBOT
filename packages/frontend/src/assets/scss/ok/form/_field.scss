@@ -1,0 +1,38 @@
+.field {
+    &.is-danger {
+      .hint {
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #f14668;
+      }
+      select,
+      input,
+      textarea {
+        border-color: #f14668;
+        &:not(:focus):hover {
+          border-color: #f14668 !important;
+        }
+        &:focus {
+          border-color: $primary;
+        }
+      }
+    }
+    &.is-success {
+      .hint {
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #48c774;
+      }
+      select,
+      input,
+      textarea {
+        border-color: #48c774;
+        &:not(:focus):hover {
+          border-color: #48c774 !important;
+        }
+        &:focus {
+          border-color: $primary;
+        }
+      }
+    }
+  }

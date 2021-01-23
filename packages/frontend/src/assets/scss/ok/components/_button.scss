@@ -1,0 +1,14 @@
+button.button {
+  transition: all 0.2s cubic-bezier(0.76, 0, 0.24, 1);
+  &.is-discord {
+    background-color: $discord;
+    border-color: $discord;
+    color: #fff;
+
+    &:hover {
+      color: #fff;
+      background-color: $discord-lighter;
+      border-color: $discord-lighter;
+    }
+  }
+}

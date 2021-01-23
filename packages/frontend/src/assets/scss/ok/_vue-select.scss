@@ -1,0 +1,31 @@
+.vs--disabled {
+  background: #363636;
+  border-color: #363636;
+
+  .vs__dropdown-toggle,
+  .vs__search,
+  .vs__open-indicator {
+    background: #363636;
+    border-color: #363636;
+  }
+
+  .vs__open-indicator {
+    fill: #363636;
+  }
+}
+
+.v-select {
+  background: #222;
+  border-radius: 4px;
+  input,
+  .vs__selected {
+    color: #c1c1c1;
+  }
+  .vs__dropdown-menu {
+    background: #222;
+
+    li {
+      color: #c1c1c1 !important;
+    }
+  }
+}
