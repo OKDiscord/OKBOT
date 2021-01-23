@@ -1,4 +1,4 @@
-import { logger } from "../../Main"
+import { logger } from "../.."
 import { makeCommand } from "../../hooks/commands"
 import { createSimple } from "../../utils/embedUtils"
 

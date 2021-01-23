@@ -1,12 +1,13 @@
 import { TextChannel } from "discord.js"
 import { createDefault } from "../../utils/embedUtils"
 import { Fasteer } from "@fasteerjs/fasteer"
+import { Announce } from "../schemas"
 
 const AnnounceController: Fasteer.FCtrl = async (
   server,
   { ctx: { discord } }
 ) => {
-  server.post<any>("/", async (req, res) => {
+  server.post<Announce.AnnounceSchema>("/", async (req, res) => {
     const { channel: channelId, title, fields } = req.body
 
     const channel = discord.channels.cache.find(

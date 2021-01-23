@@ -1,4 +1,4 @@
-import { logger } from "../../Main"
+import { logger } from "../.."
 import { makeCommand } from "../../hooks/commands"
 
 export default makeCommand({

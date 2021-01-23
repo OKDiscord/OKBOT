@@ -1,5 +1,5 @@
 import { sync as glob } from "glob"
-import { logger } from "../../Main"
+import { logger } from "../.."
 import { Context, Event } from "../../types"
 
 import path from "path"
