@@ -2,6 +2,18 @@
   "Base template for OKBOT commands": {
     "prefix": "cmd",
     "body": [
+      "import { makeCommand } from '../../hooks/commands'",
+      "",
+      "export default makeCommand({",
+      "  listensTo: '$1',",
+      "  run: async (ctx) => { $2 }",
+      "})"
+    ],
+    "description": "Base template for OKBOT events"
+  },
+  "Base template for OKBOT deprecated class commands": {
+    "prefix": "ccmd",
+    "body": [
       "import { Command } from '../../types/Command'",
       "",
       "class $1 {",
