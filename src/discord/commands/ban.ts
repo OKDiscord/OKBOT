@@ -5,6 +5,7 @@ import {
   createSimpleMultiline,
 } from "../../utils/embedUtils"
 import { asMention } from "../../utils/discordUtils"
+import { DiscordUserRepo } from "../../db/EntityManager"
 
 export default makeCommand({
   name: "ban",
@@ -13,7 +14,7 @@ export default makeCommand({
     "Jen pro moderátory!",
     "Použití: ban <uživatel>.",
   ],
-  run: async (message) => {
+  run: async (message, { args: [, reason] }) => {
     if (!message.member.hasPermission("BAN_MEMBERS")) {
       return await message.channel.send(
         createSimpleMention(
@@ -80,12 +81,17 @@ export default makeCommand({
         logger.error({ e })
       }
     }
+
+    const toBanUser = await DiscordUserRepo.findDiscordUserOrCreate(toBan.id)
+    await toBanUser.update({
+      punishments: [...toBanUser.punishments, { kind: "ban", reason }],
+    })
+    await toBan.ban()
     message.channel.send(
       createSimpleMultiline("Zabanován", [
         `Uživatel ${toBan.user.username} byl zabanován!`,
         `Zodpovědný moderátor: ${message.author.username}#${message.author.discriminator}`,
       ])
     )
-    return await toBan.ban()
   },
 })
