@@ -1,4 +1,4 @@
-import { WarnProfile } from "../../db/EntityManager"
+import { DiscordUser } from "../../db/EntityManager"
 import { makeCommand } from "../../hooks/commands"
 import { createSimpleMultiline } from "../../utils/embedUtils"
 
@@ -10,7 +10,7 @@ export default makeCommand({
     "Jen pro moderátory!",
     "Použití: warn <uživatel>.",
   ],
-  run: async (message) => {
+  run: async (message, { args: [, reason] }) => {
     if (!message.member.hasPermission("KICK_MEMBERS"))
       return await message.reply("nemáš oprávnění na tento příkaz.")
 
@@ -24,11 +24,15 @@ export default makeCommand({
       return await message.reply("sám sebe nedokážu varovat!")
 
     const toWarn = message.mentions.members.first()
-    const isThere = await WarnProfile.findOne({
-      where: { userId: toWarn.id },
+    const isThere = await DiscordUser.findOne({
+      where: { discordId: toWarn.id },
     })
+
     if (isThere) {
-      if (isThere.warnings >= 3 && toWarn.kickable) {
+      const warnings = isThere.punishments.filter((el) => el.kind === "warn")
+        .length
+
+      if (warnings >= 3 && toWarn.kickable) {
         const embed = createSimpleMultiline(
           `Warning Kick | ${toWarn.user.username}`,
           [
@@ -37,36 +41,44 @@ export default makeCommand({
             `Moderátor zodpovědný za poslední warn: ${message.author.id}`,
           ]
         )
+
         await message.channel.send(embed)
-        await isThere.update({ warnings: 0 })
-        return
-      } else if (isThere.warnings >= 3) {
+        return await isThere.update({
+          punishments: isThere.punishments.filter((el) => el.kind !== "warn"),
+        })
+      } else if (warnings >= 3) {
         const embed = createSimpleMultiline(
           `Warning Kick Error | ${toWarn.user.username}`,
           [`${toWarn.user.username} má 3+ varování, ale nemohu ho kicknout.`]
         )
         return await message.channel.send(embed)
       }
-      await isThere.update({ warnings: isThere.warnings + 1 })
-      //   message.channel.send(`<@${toWarn.id}> byl/a úspěšně varován/a!\nZodpovědný moderátor: <@${message.author.id}>!\nPočet varování: ${isThere.warnings}`)
+
+      await isThere.update({
+        punishments: [...isThere.punishments, { kind: "warn", reason }],
+      })
+
       const embed = createSimpleMultiline(`Warning | ${toWarn.user.username}`, [
         `${toWarn.user.username} byl/a úspěšně varován/a!`,
         "",
         `Zodpovědný moderátor: <@${message.author.id}>`,
-        `Počet varování: ${isThere.warnings}`,
+        `Počet varování: ${warnings + 1}`,
       ])
+
       await message.channel.send(embed)
     } else {
-      await WarnProfile.create({
-        userId: toWarn.id,
-        warnings: 1,
+      await DiscordUser.create({
+        discordId: toWarn.id,
+        punishments: [{ kind: "warn", reason }],
       })
+
       const embed = createSimpleMultiline(`Warning | ${toWarn.user.username}`, [
         `${toWarn.user.username} byl/a úspěšně varován/a!`,
         "",
         `Zodpovědný moderátor: <@${message.author.id}>`,
         `Počet varování: 1`,
       ])
+
       await message.channel.send(embed)
     }
   },

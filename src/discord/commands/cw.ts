@@ -1,5 +1,5 @@
 import { makeCommand } from "../../hooks/commands"
-import { WarnProfile } from "../../db/EntityManager"
+import { DiscordUser } from "../../db/EntityManager"
 import { asMention } from "../../utils/discordUtils"
 
 export default makeCommand({
@@ -16,11 +16,13 @@ export default makeCommand({
       return await message.reply(
         "musíš označit osobu, které chceš vymazat varování."
       )
-    const isThere = await WarnProfile.findOne({
-      userId: message.mentions.members.first().id,
+    const isThere = await DiscordUser.findOne({
+      discordId: message.mentions.members.first().id,
     })
     if (isThere) {
-      await isThere.update({ warnings: 0 })
+      await isThere.update({
+        punishments: isThere.punishments.filter((el) => el.kind !== "warn"),
+      })
       message.channel.send(
         `${asMention(
           message.author

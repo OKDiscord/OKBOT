@@ -42,5 +42,7 @@ export const createImage = (
 export const createDefault = () => {
   return new MessageEmbed()
     .setColor("#b23bf0")
-    .setFooter(`OKBOT v${Main.version()} | By Simír Gerchán & Vottus`)
+    .setFooter(
+      `OKBOT v${Main.version()} | By OKDiscord (https://okdiscord.fun)`
+    )
 }
