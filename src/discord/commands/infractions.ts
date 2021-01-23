@@ -1,5 +1,5 @@
 import { makeCommand } from "../../hooks/commands"
-import { WarnProfile } from "../../db/EntityManager"
+import { DiscordUser } from "../../db/EntityManager"
 
 export default makeCommand({
   name: "infractions",
@@ -11,13 +11,15 @@ export default makeCommand({
     if (message.mentions.members.size == 0)
       return await message.reply("nevím, koho mám zobrazit!")
 
-    const isThere = await WarnProfile.findOne({
-      userId: message.mentions.members.first().id,
+    const isThere = await DiscordUser.findOne({
+      discordId: message.mentions.members.first().id,
     })
+
+    const warns = isThere.punishments.filter((el) => el.kind === "warn")
 
     if (isThere) {
       return await message.channel.send(
-        `Tento uživatel má ${isThere.warnings} varování.`
+        `Tento uživatel má ${warns.length} varování.`
       )
     }
 
