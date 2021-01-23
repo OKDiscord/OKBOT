@@ -1,5 +1,6 @@
 import { makeCommand } from "../../hooks/commands"
 import { WarnProfile } from "../../db/EntityManager"
+import { asMention } from "../../utils/discordUtils"
 
 export default makeCommand({
   name: "cw",
@@ -21,9 +22,11 @@ export default makeCommand({
     if (isThere) {
       await isThere.update({ warnings: 0 })
       message.channel.send(
-        `<@${message.author.id}> úspěšně vyčistil varování uživateli <@${
-          message.mentions.members.first().id
-        }>.`
+        `${asMention(
+          message.author
+        )} úspěšně vyčistil varování uživateli ${asMention(
+          message.mentions.members.first()
+        )}.`
       )
       return
     }
