@@ -1,4 +1,4 @@
-import { logger } from "../../Main"
+import { logger } from "../.."
 import { makeEvent } from "../../hooks/events"
 
 export default makeEvent({

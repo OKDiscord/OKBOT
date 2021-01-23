@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { Main } from "../../Main"
+import { Main } from "../.."
 import { makeCommand } from "../../hooks/commands"
 
 /**
