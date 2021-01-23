@@ -1,21 +1,14 @@
 import config from "../../../config"
-import { Event } from "../../types/Event"
+import { makeEvent } from "../../hooks/events"
 
-class Presence {
-  constructor() {
-    return {
-      listensTo: "presenceUpdate",
-      run: async (context) => {
-        const newPresence = context.args[1]
-        if (!newPresence.activities || newPresence.activities.length === 0) {
-          return await context.discord.instance.user.setPresence({
-            activity: { name: `${config.prefix}help` },
-            status: "online",
-          })
-        }
-      },
-    } as Event<"presenceUpdate">
-  }
-}
-
-export default Presence
+export default makeEvent({
+  listensTo: "presenceUpdate",
+  run: async ({ args: [newPresence], client }) => {
+    if (!newPresence.activities || newPresence.activities.length === 0) {
+      return await client.user.setPresence({
+        activity: { name: `${config.prefix}help` },
+        status: "online",
+      })
+    }
+  },
+})

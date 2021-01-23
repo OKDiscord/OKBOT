@@ -1,25 +1,33 @@
-import { createDefault } from "../../utils/EmbedUtils"
+import { createDefault } from "../../utils/embedUtils"
 import config from "../../../config"
-import { Command } from "../../types/Command"
-class Help {
-  constructor() {
-    return {
-      name: "help",
-      description: ["Help vypíše všechny dostupné příkazy.", "Použití: help."],
-      run: async (message, { discord: { commands } }) => {
-        const helpEmbed = createDefault().setTitle("Help")
+import { makeCommand } from "../../hooks/commands"
 
-        for (const command of commands as Command[]) {
-          helpEmbed.addField(
-            `${config.prefix}${command.name}`,
-            command.description || "Žádný popis"
-          )
-        }
+export default makeCommand({
+  name: "help",
+  description: ["Help vypíše všechny dostupné příkazy.", "Použití: help."],
+  run: async (message, { commands }) => {
+    const helpEmbed = createDefault().setTitle("Help")
 
-        return await message.channel.send(helpEmbed)
-      },
-    } as Command
-  }
-}
+    for (const command of commands) {
+      const { array: roleCache } = message.member.roles.cache
 
-export default Help
+      let allowed = true
+
+      if (command.permissible) {
+        const { roles, all } = command.permissible
+
+        allowed = all
+          ? roleCache().every((item) => roles.includes(item.id))
+          : roleCache().some((item) => roles.includes(item.id))
+      }
+
+      if (allowed)
+        helpEmbed.addField(
+          `${config.prefix}${command.name}`,
+          command.description || "Žádný popis"
+        )
+    }
+
+    return await message.channel.send(helpEmbed)
+  },
+})

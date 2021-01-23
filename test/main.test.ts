@@ -3,7 +3,7 @@ import "mocha"
 
 import fs from "fs"
 import path from "path"
-import Main from "../src/Main"
+import Main from "../src"
 
 const start = new Main(true)
 
