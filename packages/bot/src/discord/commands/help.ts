@@ -1,4 +1,4 @@
-import { createDefault } from "../../utils/embedUtils"
+import { createDefault } from "@okbot/core/dist/utils/embedUtils"
 import { cfg } from "@okbot/core"
 import { makeCommand } from "../../hooks/commands"
 

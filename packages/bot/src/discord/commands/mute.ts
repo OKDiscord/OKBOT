@@ -17,7 +17,7 @@ export default makeCommand({
       return await message.reply("nemám koho ztlumit!")
 
     const muteRole = message.guild.roles.cache.find(
-      (role) => role.id == cfg.discord.roles.mute
+      (role) => role.id === cfg.discord.roles.mute
     )
     if (!muteRole) return await message.reply("role na tlumení není dostupná!")
 

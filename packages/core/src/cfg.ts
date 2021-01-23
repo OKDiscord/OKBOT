@@ -1,5 +1,7 @@
 // @ts-ignore
 import _cfg from "../../../config.json";
+// @ts-ignore
+import _pkg from "../../../package.json";
 
 const _env = process.env;
 
@@ -52,5 +54,7 @@ const discord = {
   ...(_cfg as JsonConfig).discord,
 };
 
-export { env, rest, database, discord };
-export default { env, rest, database, discord };
+const botVersion = _pkg.version;
+
+export { env, rest, database, discord, botVersion };
+export default { env, rest, database, discord, botVersion };

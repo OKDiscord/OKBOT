@@ -1,6 +1,6 @@
 import { DiscordUserRepo } from "../../db/EntityManager"
 import { makeCommand } from "../../hooks/commands"
-import { createSimpleMultiline } from "../../utils/embedUtils"
+import { createSimpleMultiline } from "@okbot/core/dist/utils/embedUtils"
 
 export default makeCommand({
   name: "warn",

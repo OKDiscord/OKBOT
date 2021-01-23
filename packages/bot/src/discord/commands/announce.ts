@@ -3,8 +3,8 @@ import {
   createDefault,
   createSimpleMention,
   createSimpleMultilineMention,
-} from "../../utils/embedUtils"
-import { shiftMany } from "../../utils/arrayUtils"
+} from "@okbot/core/dist/utils/embedUtils"
+import { shiftMany } from "@okbot/core/dist/utils/arrayUtils"
 
 export default makeCommand({
   name: "announce",

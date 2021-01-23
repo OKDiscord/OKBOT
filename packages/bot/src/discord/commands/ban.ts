@@ -3,8 +3,8 @@ import { makeCommand } from "../../hooks/commands"
 import {
   createSimpleMention,
   createSimpleMultiline,
-} from "../../utils/embedUtils"
-import { asMention } from "../../utils/discordUtils"
+} from "@okbot/core/dist/utils/embedUtils"
+import { asMention } from "@okbot/core/dist/utils/discordUtils"
 import { DiscordUserRepo } from "../../db/EntityManager"
 
 export default makeCommand({

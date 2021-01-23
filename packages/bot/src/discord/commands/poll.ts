@@ -1,6 +1,6 @@
 import { makeCommand } from "../../hooks/commands"
-import { shiftMany } from "../../utils/arrayUtils"
-import { sendPoll } from "../../hooks/polls/sendPoll"
+import { shiftMany } from "@okbot/core/dist/utils/arrayUtils"
+import { sendPoll } from "@okbot/core/dist/hooks/polls/sendPoll"
 
 export default makeCommand({
   name: "poll",

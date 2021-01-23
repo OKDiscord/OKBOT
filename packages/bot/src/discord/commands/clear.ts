@@ -1,6 +1,6 @@
 import { makeCommand } from "../../hooks/commands"
 import { TextChannel } from "discord.js"
-import { createSimpleMention } from "../../utils/embedUtils"
+import { createSimpleMention } from "@okbot/core/dist/utils/embedUtils"
 
 export default makeCommand({
   name: "clear",
