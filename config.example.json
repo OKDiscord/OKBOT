@@ -1,0 +1,13 @@
+{
+  "discord": {
+    "roles": {
+      "mute": "",
+      "webAccess": ""
+    },
+    "channels": {
+      "memberCount": ""
+    },
+    "guildId": "",
+    "prefix": "!ok "
+  }
+}

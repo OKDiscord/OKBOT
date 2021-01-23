@@ -1,8 +1,8 @@
 {
   "name": "@okbot/bot",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Bot pro Okeyko.",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "dependencies": {
     "@typegoose/typegoose": "^7.4.1",
     "@types/glob": "^7.1.3",

@@ -1,12 +1,21 @@
 import { hookFastify } from "@fasteerjs/fasteer";
 import path from "path";
 
+/**
+ * Development Environment?
+ */
 const dev = process.env.NODE_ENV === "development";
 
+/**
+ * Fasteer Context
+ */
 const ctx = {};
 
 export type Ctx = typeof ctx;
 
+/**
+ * Fasteer
+ */
 const fasteer = hookFastify({
   controllers: ["ts", "js"].map((ext) =>
     path.join(__dirname, "http", "controllers", `*Controller.${ext}`)
@@ -24,8 +33,14 @@ const fasteer = hookFastify({
   controllerContext: ctx,
 });
 
+/**
+ * Logger Shorthand
+ */
 export const logger = fasteer.getLogger();
 
+/**
+ * Start Server
+ */
 (async () => {
   try {
     await fasteer.listen();
