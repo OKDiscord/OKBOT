@@ -2,6 +2,18 @@
   "Base template for OKBOT events": {
     "prefix": "evt",
     "body": [
+      "import { makeEvent } from '../../hooks/events'",
+      "",
+      "export default makeEvent({",
+      "  listensTo: '$1',",
+      "  run: async (ctx) => { $2 }",
+      "})"
+    ],
+    "description": "Base template for OKBOT events"
+  },
+  "Base template for OKBOT deprecated class events": {
+    "prefix": "cevt",
+    "body": [
       "import { Event } from '../../types/Event'",
       "",
       "class $1 {",
