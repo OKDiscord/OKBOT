@@ -16,11 +16,8 @@ export interface Command {
 }
 
 export const makeCommand = (cmd: Command) => {
-  if (command.description) {
-    if (command.description instanceof Array) {
-      command.description = (command.description as Array<string>).join("\n")
-    }
-  }
   if (cmd.description instanceof Array)
     cmd.description = cmd.description.join("\n")
+
+  return cmd
 }

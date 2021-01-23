@@ -1,38 +1,33 @@
 import { createDefault } from "../../utils/EmbedUtils"
 import config from "../../../config"
-import { Command } from "../../types/Command"
-class Help {
-  constructor() {
-    return {
-      name: "help",
-      description: ["Help vypíše všechny dostupné příkazy.", "Použití: help."],
-      run: async (message, { discord: { commands } }) => {
-        const helpEmbed = createDefault().setTitle("Help")
+import { Command, makeCommand } from "../../types/Command"
 
-        for (const command of commands as Command[]) {
-          const { array: roleCache } = message.member.roles.cache
+export default makeCommand({
+  name: "help",
+  description: ["Help vypíše všechny dostupné příkazy.", "Použití: help."],
+  run: async (message, { discord: { commands } }) => {
+    const helpEmbed = createDefault().setTitle("Help")
 
-          let allowed = true
+    for (const command of commands as Command[]) {
+      const { array: roleCache } = message.member.roles.cache
 
-          if (command.permissible) {
-            const { roles, all } = command.permissible
+      let allowed = true
 
-            allowed = all
-              ? roleCache().every((item) => roles.includes(item.id))
-              : roleCache().some((item) => roles.includes(item.id))
-          }
+      if (command.permissible) {
+        const { roles, all } = command.permissible
 
-          if (allowed)
-            helpEmbed.addField(
-              `${config.prefix}${command.name}`,
-              command.description || "Žádný popis"
-            )
-        }
+        allowed = all
+          ? roleCache().every((item) => roles.includes(item.id))
+          : roleCache().some((item) => roles.includes(item.id))
+      }
 
-        return await message.channel.send(helpEmbed)
-      },
-    } as Command
-  }
-}
+      if (allowed)
+        helpEmbed.addField(
+          `${config.prefix}${command.name}`,
+          command.description || "Žádný popis"
+        )
+    }
 
-export default Help
+    return await message.channel.send(helpEmbed)
+  },
+})
