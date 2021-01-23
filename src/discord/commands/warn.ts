@@ -1,4 +1,4 @@
-import { DiscordUser } from "../../db/EntityManager"
+import { DiscordUserRepo } from "../../db/EntityManager"
 import { makeCommand } from "../../hooks/commands"
 import { createSimpleMultiline } from "../../utils/embedUtils"
 
@@ -24,62 +24,43 @@ export default makeCommand({
       return await message.reply("sám sebe nedokážu varovat!")
 
     const toWarn = message.mentions.members.first()
-    const isThere = await DiscordUser.findOne({
-      where: { discordId: toWarn.id },
-    })
 
-    if (isThere) {
-      const warnings = isThere.punishments.filter((el) => el.kind === "warn")
-        .length
+    const discordUser = await DiscordUserRepo.findDiscordUserOrCreate(toWarn.id)
 
-      if (warnings >= 3 && toWarn.kickable) {
-        const embed = createSimpleMultiline(
-          `Warning Kick | ${toWarn.user.username}`,
-          [
+    const warnings = discordUser.punishments.filter((el) => el.kind === "warn")
+      .length
+
+    if (warnings >= 3) {
+      const embed = toWarn.kickable
+        ? createSimpleMultiline(`Warning Kick | ${toWarn.user.username}`, [
             `${toWarn.user.username} byl/a kicknut/a za 3 a více varování!`,
             "",
             `Moderátor zodpovědný za poslední warn: ${message.author.id}`,
-          ]
-        )
+          ])
+        : createSimpleMultiline(
+            `Warning Kick Error | ${toWarn.user.username}`,
+            [`${toWarn.user.username} má 3+ varování, ale nemohu ho kicknout.`]
+          )
 
-        await message.channel.send(embed)
-        return await isThere.update({
-          punishments: isThere.punishments.filter((el) => el.kind !== "warn"),
-        })
-      } else if (warnings >= 3) {
-        const embed = createSimpleMultiline(
-          `Warning Kick Error | ${toWarn.user.username}`,
-          [`${toWarn.user.username} má 3+ varování, ale nemohu ho kicknout.`]
-        )
-        return await message.channel.send(embed)
-      }
-
-      await isThere.update({
-        punishments: [...isThere.punishments, { kind: "warn", reason }],
-      })
-
-      const embed = createSimpleMultiline(`Warning | ${toWarn.user.username}`, [
-        `${toWarn.user.username} byl/a úspěšně varován/a!`,
-        "",
-        `Zodpovědný moderátor: <@${message.author.id}>`,
-        `Počet varování: ${warnings + 1}`,
-      ])
+      if (toWarn.kickable) await toWarn.kick(reason)
 
       await message.channel.send(embed)
-    } else {
-      await DiscordUser.create({
-        discordId: toWarn.id,
-        punishments: [{ kind: "warn", reason }],
+      return await discordUser.update({
+        punishments: discordUser.punishments.filter((el) => el.kind !== "warn"),
       })
-
-      const embed = createSimpleMultiline(`Warning | ${toWarn.user.username}`, [
-        `${toWarn.user.username} byl/a úspěšně varován/a!`,
-        "",
-        `Zodpovědný moderátor: <@${message.author.id}>`,
-        `Počet varování: 1`,
-      ])
-
-      await message.channel.send(embed)
     }
+
+    await discordUser.update({
+      punishments: [...discordUser.punishments, { kind: "warn", reason }],
+    })
+
+    const embed = createSimpleMultiline(`Warning | ${toWarn.user.username}`, [
+      `${toWarn.user.username} byl/a úspěšně varován/a!`,
+      "",
+      `Zodpovědný moderátor: <@${message.author.id}>`,
+      `Počet varování: ${warnings + 1}`,
+    ])
+
+    await message.channel.send(embed)
   },
 })

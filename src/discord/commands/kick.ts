@@ -1,4 +1,5 @@
 import { logger } from "../.."
+import { DiscordUserRepo } from "../../db/EntityManager"
 import { makeCommand } from "../../hooks/commands"
 
 export default makeCommand({
@@ -8,7 +9,7 @@ export default makeCommand({
     "Jen pro moderátory!",
     "Použití: kick <uživatel>.",
   ],
-  run: async (message) => {
+  run: async (message, { args: [, reason] }) => {
     if (!message.member.hasPermission("KICK_MEMBERS")) {
       return await message.reply("nemáš oprávnění na tento příkaz.")
     }
@@ -45,9 +46,13 @@ export default makeCommand({
         logger.error({ e })
       }
     }
+    const toKickUser = await DiscordUserRepo.findDiscordUserOrCreate(toKick.id)
+    await toKickUser.update({
+      punishments: [...toKickUser.punishments, { kind: "kick", reason }],
+    })
+    await toKick.kick()
     message.channel.send(
       `${toKick.nickname} byl/a úspěšně vyhozen/a!\nZodpovědný Moderátor: <@${message.author.id}>!`
     )
-    return await toKick.kick()
   },
 })
