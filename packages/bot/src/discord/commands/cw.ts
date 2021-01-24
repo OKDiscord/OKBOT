@@ -1,5 +1,5 @@
 import { makeCommand } from "../../hooks/commands"
-import { DiscordUser } from "../../db/EntityManager"
+import { DiscordUser } from "@okbot/core/dist/db/EntityManager"
 import { asMention } from "@okbot/core/dist/utils/discordUtils"
 
 export default makeCommand({

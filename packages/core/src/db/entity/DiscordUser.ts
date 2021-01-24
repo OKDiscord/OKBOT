@@ -13,6 +13,6 @@ export class DiscordUser extends MongoEntity {
   discordId!: string
 
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  @prop({ required: true, default: [] })
+  @prop({ required: true, default: [], type: Array })
   punishments: DiscordUserPunishment[] = []
 }

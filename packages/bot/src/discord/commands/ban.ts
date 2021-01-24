@@ -5,7 +5,7 @@ import {
   createSimpleMultiline,
 } from "@okbot/core/dist/utils/embedUtils"
 import { asMention } from "@okbot/core/dist/utils/discordUtils"
-import { DiscordUserRepo } from "../../db/EntityManager"
+import { DiscordUserRepo } from "@okbot/core/dist/db/EntityManager"
 
 export default makeCommand({
   name: "ban",

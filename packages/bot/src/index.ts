@@ -5,7 +5,8 @@ import fs from "fs"
 import path from "path"
 import { cfg } from "@okbot/core"
 
-import { connect as connectDb, Mongoose } from "mongoose"
+import { Mongoose } from "mongoose"
+import connectDatabase from "@okbot/core/dist/db/connectDatabase"
 import { createLogger, format, transports } from "winston"
 import { Command } from "./types/command"
 import { Event } from "./types/event"
@@ -64,10 +65,7 @@ export class Main {
 
   async initDatabase() {
     try {
-      this.db = await connectDb(cfg.database(), {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
+      this.db = await connectDatabase()
       logger.info("Successfully connected to the database.")
     } catch (e) {
       logger.error("Cannot connect to the database.")

@@ -1,5 +1,5 @@
 import { logger } from "../.."
-import { DiscordUserRepo } from "../../db/EntityManager"
+import { DiscordUserRepo } from "@okbot/core/dist/db/EntityManager"
 import { makeCommand } from "../../hooks/commands"
 
 export default makeCommand({

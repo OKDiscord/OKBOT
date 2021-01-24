@@ -1,0 +1,6 @@
+{
+  "ignore": ["dist/*"],
+  "watch": ["src/*"],
+  "exec": "yarn compile",
+  "ext": "ts,js,json"
+}

@@ -5,9 +5,15 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "compile": "tsc"
+    "compile": "tsc -p tsconfig.json",
+    "compile:watch": "nodemon -e ts,js,json --exec 'echo \"Compiling @okbot/core\"&&yarn compile'"
   },
   "dependencies": {
-    "@okbot/config": "^3.0.0"
+    "@typegoose/typegoose": "^7.4.8",
+    "@types/mongoose": "^5.10.3",
+    "dotenv": "^8.2.0",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.13",
+    "mongoose-autopopulate": "^0.12.3"
   }
 }

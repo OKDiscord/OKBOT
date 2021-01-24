@@ -15,6 +15,7 @@
     "core:dev": "./bin/core compile:watch",
     "front:dev": "./bin/frontend serve",
     "rest:dev": "./bin/rest dev",
-    "build": "./bin/build"
+    "build": "./bin/build",
+    "dev": "./bin/core compile && concurrently -k -n 'ok:core,ok:bot,ok:rest' -c 'magenta.bold,red.bold,white.bold' 'yarn core:dev' 'yarn bot:dev' 'yarn rest:dev'"
   }
 }

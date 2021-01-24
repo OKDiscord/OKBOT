@@ -1,9 +1,21 @@
-// @ts-ignore
-import _cfg from "../../../config.json";
-// @ts-ignore
-import _pkg from "../../../package.json";
+import { config as environment } from "dotenv";
+import path from "path";
 
-const _env = process.env;
+let _env: any = null;
+
+const setupEnv = () => {
+  const _parsed = environment({ path: path.join(__dirname, "../../../.env") })
+    .parsed;
+  if (_parsed) _env = { ..._parsed, ...process.env };
+};
+
+const fromEnv = (key: string) => {
+  if (!_env) setupEnv();
+  return _env[key];
+};
+
+const _cfg = require("../../../config.json");
+const _pkg = require("../../../package.json");
 
 interface JsonConfig {
   discord: {
@@ -23,38 +35,39 @@ interface JsonConfig {
  * Environment
  */
 const env = {
-  isDev: () => _env.NODE_ENV === "development",
-  isProd: () => _env.NODE_ENV !== "development",
+  isDev: () => fromEnv("NODE_ENV") === "development",
+  isProd: () => fromEnv("NODE_ENV") !== "development",
 };
 
 /**
  * REST API
  */
 const rest = {
-  restPort: () => (_env.REST_PORT ? Number(_env.REST_PORT) : 4000),
+  restPort: () => (fromEnv("REST_PORT") ? Number(fromEnv("REST_PORT")) : 4000),
   jwtSecret: () => {
-    if (!_env.JWT_SECRET) console.error("JWT_SECRET IS NOT SET!");
+    if (!fromEnv("JWT_SECRET")) console.error("JWT_SECRET IS NOT SET!");
 
-    return _env.JWT_SECRET ?? "okb0tdev__jwt__dontstealourhardwork";
+    return fromEnv("JWT_SECRET") ?? "okb0tdev__jwt__dontstealourhardwork";
   },
 };
 
 /**
  * Database
  */
-const database = () => _env.DB_URL ?? "mongodb://admin:pass@domain.tld/okbot";
+const database = () =>
+  fromEnv("DB_URL") ?? "mongodb://admin:pass@domain.tld/okbot";
 
 /**
  * Discord
  */
 const discord = {
-  botToken: () => _env.BOT_TOKEN,
-  clientSecret: () => _env.BOT_SECRET,
-  oauthUrl: () => _env.DISCORD_OAUTH_URL,
+  botToken: () => fromEnv("BOT_TOKEN"),
+  clientSecret: () => fromEnv("BOT_SECRET"),
+  oauthUrl: () => fromEnv("DISCORD_OAUTH_URL"),
   ...(_cfg as JsonConfig).discord,
 };
 
 const botVersion = _pkg.version;
 
-export { env, rest, database, discord, botVersion };
-export default { env, rest, database, discord, botVersion };
+export { env, rest, database, discord, botVersion, setupEnv, fromEnv };
+export default { env, rest, database, discord, botVersion, setupEnv, fromEnv };
