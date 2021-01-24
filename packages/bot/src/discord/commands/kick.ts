@@ -9,7 +9,7 @@ export default makeCommand({
     "Jen pro moderátory!",
     "Použití: kick <uživatel>.",
   ],
-  run: async (message, { args: [, reason] }) => {
+  run: async (message, { args: [, reason], db: { punishment } }) => {
     if (!message.member.hasPermission("KICK_MEMBERS")) {
       return await message.reply("nemáš oprávnění na tento příkaz.")
     }
@@ -46,9 +46,12 @@ export default makeCommand({
         logger.error({ e })
       }
     }
-    const toKickUser = await DiscordUserRepo.findDiscordUserOrCreate(toKick.id)
-    await toKickUser.update({
-      punishments: [...toKickUser.punishments, { kind: "kick", reason }],
+    await punishment.create({
+      data: {
+        kind: "kick",
+        reason,
+        punished: toKick.id,
+      },
     })
     await toKick.kick()
     message.channel.send(

@@ -8,7 +8,9 @@
     "packages/*"
   ],
   "devDependencies": {
-    "concurrently": "^5.3.0"
+    "concurrently": "^5.3.0",
+    "@prisma/cli": "^2.15.0",
+    "@prisma/client": "^2.15.0"
   },
   "scripts": {
     "bot:dev": "./bin/bot dev",

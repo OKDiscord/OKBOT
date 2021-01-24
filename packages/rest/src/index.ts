@@ -1,7 +1,7 @@
 import { Fasteer, hookFastify } from "@fasteerjs/fasteer";
 import { Client as DClient } from "discord.js";
-import { Mongoose } from "mongoose";
-import { cfg, connectDatabase } from "@okbot/core";
+import { PrismaClient } from "@prisma/client";
+import { cfg } from "@okbot/core";
 import path from "path";
 
 /**
@@ -10,9 +10,9 @@ import path from "path";
 const dev = process.env.NODE_ENV === "development";
 
 /**
- * MongoDB
+ * Prisma
  */
-let db: Mongoose;
+let db = new PrismaClient();
 
 /**
  * Fasteer
@@ -32,22 +32,18 @@ export let logger: Fasteer.Fasteer["logger"];
 /**
  * Context Type
  */
-export type Ctx = {
+export interface Ctx {
   db: typeof db;
   dev: typeof dev;
   discord: typeof discord;
-};
+}
+
+export type FCtx = Fasteer.Ctx<Ctx>;
 
 /**
  * Start Server
  */
 (async () => {
-  try {
-    db = await connectDatabase();
-  } catch (e) {
-    console.log(e);
-  }
-
   /**
    * Discord
    */

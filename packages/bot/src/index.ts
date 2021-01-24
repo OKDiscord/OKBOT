@@ -3,9 +3,9 @@ import * as Discord from "discord.js"
 import { sync as glob } from "glob"
 import fs from "fs"
 import path from "path"
-import { cfg, createLogger, connectDatabase } from "@okbot/core"
+import { cfg, createLogger } from "@okbot/core"
 
-import { Mongoose } from "mongoose"
+import { PrismaClient } from "@prisma/client"
 import { Command } from "./types/command"
 import { Event } from "./types/event"
 import { Context, EnvironmentType } from "./types"
@@ -15,7 +15,7 @@ export const logger = createLogger()
 export class Main {
   // Variables
   client: Discord.Client
-  db: Mongoose
+  db = new PrismaClient()
 
   commands: Command[] = []
 
@@ -31,21 +31,9 @@ export class Main {
 
   async init() {
     logger.info(`OKBOT ${Main.version()}`)
-    await this.initDatabase()
     await this.initDiscord()
     await this.initCommands()
     await this.initDiscordEvents()
-  }
-
-  async initDatabase() {
-    try {
-      this.db = await connectDatabase()
-      logger.info("Successfully connected to the database.")
-    } catch (e) {
-      logger.error("Cannot connect to the database.")
-      logger.error(e.message)
-      process.exit(1)
-    }
   }
 
   async initDiscord() {

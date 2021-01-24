@@ -1,11 +1,11 @@
+import { PrismaClient } from "@prisma/client"
 import { Client } from "discord.js"
-import { Mongoose } from "mongoose"
 import { Command } from "./command"
 
 // Context for all controllers, events and other stuff
 export interface Context {
   client: Client
-  db: Mongoose
+  db: PrismaClient
   commands: Command[]
 }
 

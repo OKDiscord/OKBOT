@@ -1,4 +1,3 @@
-import { DiscordUserRepo } from "@okbot/core/dist/db/EntityManager"
 import { makeCommand } from "../../hooks/commands"
 import { createSimpleMultiline } from "@okbot/core/dist/utils/embedUtils"
 
@@ -10,7 +9,7 @@ export default makeCommand({
     "Jen pro moderátory!",
     "Použití: warn <uživatel>.",
   ],
-  run: async (message, { args: [, reason] }) => {
+  run: async (message, { args: [, reason], db: { punishment } }) => {
     if (!message.member.hasPermission("KICK_MEMBERS"))
       return await message.reply("nemáš oprávnění na tento příkaz.")
 
@@ -24,13 +23,11 @@ export default makeCommand({
       return await message.reply("sám sebe nedokážu varovat!")
 
     const toWarn = message.mentions.members.first()
+    const punishmentCount = await punishment.count({
+      where: { punished: toWarn.id, kind: "warn" },
+    })
 
-    const discordUser = await DiscordUserRepo.findDiscordUserOrCreate(toWarn.id)
-
-    const warnings = discordUser.punishments.filter((el) => el.kind === "warn")
-      .length
-
-    if (warnings >= 3) {
+    if (punishmentCount >= 3) {
       const embed = toWarn.kickable
         ? createSimpleMultiline(`Warning Kick | ${toWarn.user.username}`, [
             `${toWarn.user.username} byl/a kicknut/a za 3 a více varování!`,
@@ -45,20 +42,20 @@ export default makeCommand({
       if (toWarn.kickable) await toWarn.kick(reason)
 
       await message.channel.send(embed)
-      return await discordUser.update({
-        punishments: discordUser.punishments.filter((el) => el.kind !== "warn"),
+      return await punishment.deleteMany({
+        where: { punished: toWarn.id, kind: "warn" },
       })
     }
 
-    await discordUser.update({
-      punishments: [...discordUser.punishments, { kind: "warn", reason }],
+    await punishment.create({
+      data: { kind: "warn", reason, punished: toWarn.id },
     })
 
     const embed = createSimpleMultiline(`Warning | ${toWarn.user.username}`, [
       `${toWarn.user.username} byl/a úspěšně varován/a!`,
       "",
       `Zodpovědný moderátor: <@${message.author.id}>`,
-      `Počet varování: ${warnings + 1}`,
+      `Počet varování: ${punishmentCount + 1}`,
     ])
 
     await message.channel.send(embed)

@@ -9,7 +9,7 @@ export default makeCommand({
     "Jen pro moderátory!",
     "Použití: mute <uživatel>.",
   ],
-  run: async (message) => {
+  run: async (message, { args: [, reason], db: { punishment } }) => {
     if (!message.member.hasPermission("KICK_MEMBERS"))
       return await message.reply("nemáš oprávnění na tento příkaz.")
 
@@ -33,7 +33,14 @@ export default makeCommand({
       return
     }
 
-    target.roles.add(muteRole)
+    await punishment.create({
+      data: {
+        kind: "mute",
+        reason,
+        punished: target.id,
+      },
+    })
+    await target.roles.add(muteRole)
 
     message.reply("uživatel byl ztlumen.")
   },

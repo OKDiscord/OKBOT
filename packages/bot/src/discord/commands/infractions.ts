@@ -1,5 +1,4 @@
 import { makeCommand } from "../../hooks/commands"
-import { DiscordUser } from "@okbot/core/dist/db/EntityManager"
 
 export default makeCommand({
   name: "infractions",
@@ -7,22 +6,17 @@ export default makeCommand({
     "Infractions umožňuje moderátorům zjišťovat varování daných uživatelů.",
     "Použití: infractions <uživatel>.",
   ],
-  run: async (message) => {
+  run: async (message, { db }) => {
     if (message.mentions.members.size == 0)
       return await message.reply("nevím, koho mám zobrazit!")
 
-    const isThere = await DiscordUser.findOne({
-      discordId: message.mentions.members.first().id,
+    const warns = await db.punishment.count({
+      where: {
+        punished: message.mentions.members.first().id,
+        reason: "warn",
+      },
     })
 
-    const warns = isThere.punishments.filter((el) => el.kind === "warn")
-
-    if (isThere) {
-      return await message.channel.send(
-        `Tento uživatel má ${warns.length} varování.`
-      )
-    }
-
-    message.channel.send("Tento uživatel má 0 varování.")
+    message.channel.send(`Tento uživatel má ${warns} varování.`)
   },
 })
