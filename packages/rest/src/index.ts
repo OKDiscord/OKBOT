@@ -1,6 +1,6 @@
 import { Fasteer, hookFastify } from "@fasteerjs/fasteer";
 import { Mongoose } from "mongoose";
-import connectDatabase from "@okbot/core/dist/db/connectDatabase";
+import { connectDatabase } from "@okbot/core";
 import path from "path";
 
 /**

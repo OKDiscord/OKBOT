@@ -3,40 +3,14 @@ import * as Discord from "discord.js"
 import { sync as glob } from "glob"
 import fs from "fs"
 import path from "path"
-import { cfg } from "@okbot/core"
+import { cfg, createLogger, connectDatabase } from "@okbot/core"
 
 import { Mongoose } from "mongoose"
-import connectDatabase from "@okbot/core/dist/db/connectDatabase"
-import { createLogger, format, transports } from "winston"
 import { Command } from "./types/command"
 import { Event } from "./types/event"
 import { Context, EnvironmentType } from "./types"
 
-const loggerFormat = format.printf(({ level, message, timestamp }) => {
-  return `${timestamp} | ${level}: ${message}`
-})
-
-export const logger = createLogger({
-  transports: [
-    new transports.Console({
-      format: format.combine(
-        format.timestamp(),
-        format.colorize(),
-        loggerFormat
-      ),
-      handleExceptions: true,
-    }),
-    new transports.File({
-      format: format.combine(format.timestamp(), loggerFormat),
-      filename: path.join(__dirname, "..", "logs", "combined.log"),
-    }),
-  ],
-  exceptionHandlers: [
-    new transports.File({
-      filename: path.join(__dirname, "..", "logs", "exceptions.log"),
-    }),
-  ],
-})
+export const logger = createLogger()
 
 export class Main {
   // Variables
