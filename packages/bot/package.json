@@ -4,6 +4,7 @@
   "description": "Bot pro Okeyko.",
   "main": "dist/index.js",
   "dependencies": {
+    "@okbot/core": "^3.0.0",
     "@typegoose/typegoose": "^7.4.1",
     "@types/glob": "^7.1.3",
     "@types/jsonwebtoken": "^8.5.0",
