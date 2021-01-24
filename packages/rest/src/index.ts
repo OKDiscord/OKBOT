@@ -1,6 +1,7 @@
 import { Fasteer, hookFastify } from "@fasteerjs/fasteer";
+import { Client as DClient } from "discord.js";
 import { Mongoose } from "mongoose";
-import { connectDatabase } from "@okbot/core";
+import { cfg, connectDatabase } from "@okbot/core";
 import path from "path";
 
 /**
@@ -19,6 +20,11 @@ let db: Mongoose;
 let fasteer: Fasteer.Fasteer;
 
 /**
+ * Discord
+ */
+let discord: DClient;
+
+/**
  * Logger Shorthand
  */
 export let logger: Fasteer.Fasteer["logger"];
@@ -29,6 +35,7 @@ export let logger: Fasteer.Fasteer["logger"];
 export type Ctx = {
   db: typeof db;
   dev: typeof dev;
+  discord: typeof discord;
 };
 
 /**
@@ -42,11 +49,22 @@ export type Ctx = {
   }
 
   /**
+   * Discord
+   */
+  discord = new DClient();
+  try {
+    await discord.login(cfg.discord.botToken());
+  } catch (e) {
+    console.log(e);
+  }
+
+  /**
    * Fasteer Context
    */
   const ctx: Ctx = {
     db,
     dev,
+    discord,
   };
 
   fasteer = hookFastify({
