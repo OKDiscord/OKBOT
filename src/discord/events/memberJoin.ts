@@ -3,10 +3,10 @@ import { makeEvent } from "../../hooks/events"
 
 export default makeEvent({
   listensTo: "guildMemberAdd",
-  run: async (context) => {
+  run: async ({ args: [member] }) => {
     const {
       guild: { memberCount, channels },
-    } = context.args[0]
+    } = member
 
     const memberCountChannel = channels.cache.find(
       (channel) => channel.id === config.memberCountChannelId

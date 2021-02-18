@@ -29,12 +29,12 @@ export default async ({ paths, ctx }: CreateEventProps) => {
 
     logger.info(`Registering event ${path.parse(file).base}`)
 
-    ctx.client.on(evt.listensTo, (...args) =>
-      evt.run({
+    ctx.client.on(event.listensTo, (...args) => {
+      event.run({
         ...ctx,
-        eventName: evt.listensTo,
+        eventName: event.listensTo,
         args,
       })
-    )
+    })
   }
 }
