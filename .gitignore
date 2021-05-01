@@ -4,3 +4,4 @@ packages/**/dist
 packages/**/**/*.local
 packages/**/**/local.*
 node_modules
+.env
