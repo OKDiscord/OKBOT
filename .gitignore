@@ -5,3 +5,4 @@ packages/**/**/*.local
 packages/**/**/local.*
 node_modules
 .env
+yarn-error.log
