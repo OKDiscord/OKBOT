@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@fasteerjs/fasteer": "^1.0.9",
+    "@fasteerjs/fasteer": "^3.0.1",
     "@okbot/core": "^3.0.0"
   },
   "scripts": {

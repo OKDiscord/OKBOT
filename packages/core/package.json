@@ -10,6 +10,6 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "mongoose-autopopulate": "^0.12.3"
+    "mongoose-autopopulate": "^0.13.0"
   }
 }
