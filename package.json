@@ -13,11 +13,11 @@
     "concurrently": "^6.0.2"
   },
   "scripts": {
-    "bot:dev": "./bin/bot dev",
-    "core:dev": "./bin/core compile:watch",
-    "front:dev": "./bin/frontend serve",
-    "rest:dev": "./bin/rest dev",
-    "build": "./bin/build",
-    "dev": "./bin/core compile && concurrently -k -n 'ok:core,ok:bot,ok:rest' -c 'magenta.bold,red.bold,white.bold' 'yarn core:dev' 'yarn bot:dev' 'yarn rest:dev'"
+    "bot": "yarn workspace @okbot/bot",
+    "core": "yarn workspace @okbot/core",
+    "frontend": "yarn workspace @okbot/frontend",
+    "rest": "yarn workspace @okbot/rest",
+    "build": "yarn bot compile && yarn core compile && yarn frontend compile && yarn rest compile",
+    "dev": "yarn core compile && concurrently -k -n 'ok:core,ok:bot,ok:rest' -c 'magenta.bold,red.bold,white.bold' 'yarn core dev' 'yarn bot dev' 'yarn rest dev'"
   }
 }
