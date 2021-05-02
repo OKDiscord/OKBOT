@@ -7,11 +7,20 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@fasteerjs/exceptions": "^1.0.0",
     "@fasteerjs/fasteer": "^3.0.1",
-    "@okbot/core": "^3.0.0"
+    "@okbot/core": "^3.0.0",
+    "bcryptjs": "^2.4.3",
+    "discord.js": "^12.5.3",
+    "fastify-secure-session": "^2.3.1",
+    "fluent-json-schema": "^2.0.4"
   },
   "scripts": {
     "compile": "tsc",
-    "dev": "tsnd src/index.ts"
+    "dev": "tsnd src/index.ts",
+    "gen-key": "./node_modules/.bin/secure-session-gen-key > ../../session-key.local"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2"
   }
 }

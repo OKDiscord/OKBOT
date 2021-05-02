@@ -1,8 +1,7 @@
 config.ts
 packages/**/node_modules
 packages/**/dist
-packages/**/**/*.local
-packages/**/**/local.*
 node_modules
 .env
+*.local
 yarn-error.log

@@ -8,9 +8,9 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@prisma/cli": "^2.20.1",
     "@prisma/client": "^2.21.2",
-    "concurrently": "^6.0.2"
+    "concurrently": "^6.0.2",
+    "prisma": "^2.21.2"
   },
   "scripts": {
     "bot": "yarn workspace @okbot/bot",

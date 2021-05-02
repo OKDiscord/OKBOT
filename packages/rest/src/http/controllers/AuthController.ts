@@ -1,20 +1,26 @@
-import { Fasteer as F } from "@fasteerjs/fasteer";
+import { UserInputError } from "@fasteerjs/exceptions";
+import { Controller } from "../../types";
 import { Auth } from "../schemas";
-import { FCtx } from "../..";
+import { hashes } from "@okbot/core/src";
 
-const AuthController: F.FCtrl = async (fastify, { ctx: { db } }: FCtx) => {
+const AuthController: Controller = async (fastify, { db }) => {
   fastify.post<Auth.LoginSchema>(
     "/login",
     { schema: Auth.loginSchema },
-    async ({ body: { username, password } }, res) => {
-      // const user = U;
-    }
-  );
+    async ({ body: { username, password }, session }, res) => {
+      const user = await db.user.findUnique({
+        where: {
+          username,
+        },
+      });
 
-  fastify.post<Auth.DiscordAuthSchema>(
-    "/discord-authorize",
-    { schema: Auth.discordAuthSchema },
-    async (req, res) => {}
+      if (!user || !hashes.compareHash(password, user.password))
+        throw new UserInputError("Incorrect username and/or password.");
+
+      session.set("userId", user.id);
+
+      res.send(res.ok({ message: "Authenticated." }));
+    }
   );
 };
 
