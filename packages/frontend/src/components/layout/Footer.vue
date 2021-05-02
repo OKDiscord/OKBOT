@@ -1,9 +1,9 @@
 <template>
-  <footer class="footer">
-    <div class="content has-text-centered">
+  <footer class="py-8 bg-gray-800 text-white">
+    <div class="px-6 max-w-6xl mx-auto w-full flex justify-center">
       <p>
-        <strong>{{ new Date().getFullYear() }}</strong> &copy; Vottus & SIM7K
-        &bullet; Všechna práva vyhrazena.
+        <strong>2020-{{ new Date().getFullYear() }}</strong> &copy; Mia & SIM7K
+        &bullet; All rights reserved.
       </p>
     </div>
   </footer>

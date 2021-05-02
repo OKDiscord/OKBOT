@@ -1,29 +1,44 @@
 <template>
-  <div>
-    <Header />
-    <div class="container" style="margin-top: 40px; margin-bottom: 60px;">
-      <FlashMessageWrapper />
+  <Navbar />
+  <div class="bg-gray-900">
+    <div class="py-24 bg-primary-image-blur bg-no-repeat bg-cover bg-center">
+      <div class="px-6 max-w-6xl mx-auto w-full">
+        <Title class="text-4xl text-white">
+          {{ store.pageTitle }}
+        </Title>
+      </div>
     </div>
-    <div style="min-height: calc(100vh - 4rem);">
-      <router-view />
-    </div>
-    <Footer />
+    <main class="min-w-screen min-h-screen px-6 max-w-6xl mx-auto w-full">
+      <alert-renderer />
+      <div class="py-8">
+        <router-view />
+      </div>
+    </main>
   </div>
+  <Footer />
 </template>
 
 <script lang="ts">
-import Vue from "vue"
+import { defineComponent } from "vue"
+import AlertRenderer from "../components/elements/alert/AlertRenderer.vue"
+import Navbar from "../components/layout/Navbar.vue"
+import Footer from "../components/layout/Footer.vue"
+import Title from "../components/typography/Title.vue"
+import store from "../store"
 
-import Header from "@/components/layout/Header.vue"
-import Footer from "@/components/layout/Footer.vue"
-import FlashMessageWrapper from "@/components/flash/FlashMessageWrapper.vue"
-
-export default Vue.extend({
-  name: "DefaultLayout",
+export default defineComponent({
   components: {
-    Header,
+    AlertRenderer,
+    Title,
+    Navbar,
     Footer,
-    FlashMessageWrapper,
+  },
+  setup() {
+    store.pageTitle = "Dashboard"
+
+    return {
+      store,
+    }
   },
 })
 </script>

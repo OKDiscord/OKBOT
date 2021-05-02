@@ -1,74 +1,47 @@
-import store from "@/store"
-import Vue from "vue"
-import VueRouter, { RouteConfig, RouterMode } from "vue-router"
-import { component } from "vue/types/umd"
+import { clearAlerts } from "../store/alert"
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 
-Vue.use(VueRouter)
-
-const mode: RouterMode = "history"
-
-const routes: RouteConfig[] = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    component: () => import("@/layouts/default.vue"),
+    component: () => import("../layouts/default.vue"),
     children: [
       {
         path: "/",
-        component: () => import("@/pages/index.vue")
+        component: () => import("../pages/index.vue"),
       },
-      {
-        path: "/announce",
-        component: () => import("@/pages/announce.vue")
-      },
-      {
-        path: "/poll",
-        component: () => import("@/pages/poll.vue")
-      }
-    ]
+    ],
   },
   {
     path: "/login",
-    component: () => import("@/layouts/auth.vue"),
+    component: () => import("../layouts/auth.vue"),
     children: [
       {
         path: "/login",
-        component: () => import("@/pages/auth/login.vue")
+        component: () => import("../pages/auth/login.vue"),
       },
-      {
-        path: "/login/discord",
-        component: () => import("@/pages/auth/discord-login.vue")
-      },
-      {
-        path: "/bot-authorize", // temporary till sim7k wakes his ass up
-        component: () => import("@/pages/auth/discord-login.vue")
-      }
-    ]
-  }
+    ],
+  },
 ]
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
 })
 
-router.beforeEach((to, from, next) => {
-  // Clear flash messages on each route
-  store.dispatch("clearFlash")
+router.beforeEach(to => {
+  // Clear alerts on each route
+  clearAlerts()
 
-  // Login redirects
-  const redirectToLogin = [
-    "/l",
-    "/log",
-    "/r",
-    "/reg",
-    "/register",
-    "/a",
-    "/auth"
-  ]
-  if (redirectToLogin.includes(to.matched[0].path)) return next("/login")
+  // Shortcuts
+  const shortcuts: { [key: string]: string } = {
+    "/l": "/login",
+    "/log": "/login",
+    "/a": "/login",
+    "/auth": "/login",
+  }
 
-  next()
+  if (Object.keys(shortcuts).includes(to.path)) return shortcuts[to.path]
 })
 
 export default router
