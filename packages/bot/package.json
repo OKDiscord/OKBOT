@@ -30,7 +30,7 @@
     "@types/chai": "^4.2.18",
     "@types/mocha": "^8.2.2",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
-    "@typescript-eslint/parser": "^4.22.1",
+    "@typescript-eslint/parser": "^4.23.0",
     "chai": "^4.3.4",
     "eslint": "^7.26.0",
     "nodemon": "^2.0.7"
