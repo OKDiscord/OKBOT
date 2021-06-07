@@ -472,12 +472,12 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.11.tgz#20d22dd0da7d358bb21c17f9bde8628152642c77"
   integrity sha512-b+zB8A2so8eCE0JsxjL24J7vdGl8rzPQ09hZNhystm+KqSbKcAej1A+Hbva1rCMmTTqA+hFnUSDc5kouEo0JzA==
 
-"@vuelidate/core@^2.0.0-alpha.16":
-  version "2.0.0-alpha.16"
-  resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-2.0.0-alpha.16.tgz#1e4018015a8159a98956bfce6bad2348948156e9"
-  integrity sha512-qMIZSttG663YMPh9MMXK4xwjr9QY8tfylSkUyIbEvfTmWFRauSOEE68fZrWCz5vYL3QIR5je8bRgjXCA6r1xAA==
+"@vuelidate/core@^2.0.0-alpha.19":
+  version "2.0.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-2.0.0-alpha.19.tgz#d0482ed6d55269084ce42bfcdc7b9892f1f17b6e"
+  integrity sha512-P5vGGWzoFmdHSXXVrC009abPs3XS/25w2xsH45evPO3Od9gvjwXdEzTGehmb/MLBfk4BJ5GkD6NKfjmnFHd5sw==
   dependencies:
-    vue-demi "^0.6.0"
+    vue-demi "^0.9.1"
 
 "@vuelidate/validators@^2.0.0-alpha.14":
   version "2.0.0-alpha.14"
@@ -3920,6 +3920,11 @@ vue-demi@^0.6.0:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.6.2.tgz#ed9633eaa69b7409cc6e8328e8a6c3d31ab39319"
   integrity sha512-4KfwxbqsZcDz7UryD11oHa6FLK9Gzx4MIwAEcP37IbUdXuF6DHg2w9L5Zv5t+FNqsuAjEQ2NnGVIZ3u71y435Q==
+
+vue-demi@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.9.1.tgz#25d6e1ebd4d4010757ff3571e2bf6a1d7bf3de82"
+  integrity sha512-7s1lufRD2l369eFWPjgLvhqCRk0XzGWJsQc7K4q+0mZtixyGIvsK1Cg88P4NcaRIEiBuuN4q1NN4SZKFKwQswA==
 
 vue-router@^4.0.6:
   version "4.0.6"
