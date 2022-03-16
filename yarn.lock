@@ -159,10 +159,10 @@
   resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-2.22.0-21.60cc71d884972ab4e897f0277c4b84383dddaf6c.tgz#e98ee17217a0ebb54f2f9314fbbfd610b05e6e31"
   integrity sha512-OkkVwk6iTzTbwwl8JIKAENyxmh4TFORal55QMKQzrHEY8UzbD0M90mQnmziz3PAopQUZgTFFMlaPAq1WNrLMtA==
 
-"@prisma/engines@2.22.0-21.60cc71d884972ab4e897f0277c4b84383dddaf6c":
-  version "2.22.0-21.60cc71d884972ab4e897f0277c4b84383dddaf6c"
-  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-2.22.0-21.60cc71d884972ab4e897f0277c4b84383dddaf6c.tgz#4ccd255e0823605db3d8387a5195b6fdabe3b0c0"
-  integrity sha512-KmWdogrsfsSLYvfqY3cS3QcDGzaEFklE+T6dNJf+k/KPQum4A29IwDalafMwh5cMN8ivZobUbowNSwWJrMT08Q==
+"@prisma/engines@3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b":
+  version "3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b.tgz#4c1093f7b24c433a9cef2e60f13f57f7c89b5cfa"
+  integrity sha512-m9iZd5F5vP6A2IvKWfHpOO/qK8OOO9nbsV/pdyEkF/1WNe0E8SIWFBKb+HcMLkG9OFbDDBy8QItXmp/mIULuwQ==
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -3063,12 +3063,12 @@ prism-media@^1.2.9:
   resolved "https://registry.yarnpkg.com/prism-media/-/prism-media-1.2.9.tgz#8d4f97b36efdfc82483eb8d3db64020767866f36"
   integrity sha512-UHCYuqHipbTR1ZsXr5eg4JUmHER8Ss4YEb9Azn+9zzJ7/jlTtD1h0lc4g6tNx3eMlB8Mp6bfll0LPMAV4R6r3Q==
 
-prisma@^2.22.1:
-  version "2.22.1"
-  resolved "https://registry.yarnpkg.com/prisma/-/prisma-2.22.1.tgz#884687a90c7b797b34c6110ea413049078c8da6e"
-  integrity sha512-hwvCM3zyxgSda/+/p+GW7nz93jRebtMU01wAG7YVVnl0OKU+dpw1wPvPFmQRldkZHk8fTCleYmjc24WaSdVPZQ==
+prisma@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-3.11.0.tgz#0e384e9d36785711b579fda60117a2d41f79c72c"
+  integrity sha512-8SdsLPhKR3mOfoo2o73h9mNn3v5kA/RqGA26Sv6qDS78Eh2uepPqt5e8/nwj5EOblYm5HEGuitaXQrOCLb6uTw==
   dependencies:
-    "@prisma/engines" "2.22.0-21.60cc71d884972ab4e897f0277c4b84383dddaf6c"
+    "@prisma/engines" "3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
