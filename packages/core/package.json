@@ -9,7 +9,7 @@
     "compile:watch": "nodemon -e ts,js,json --exec 'echo \"Compiling @okbot/core\"&&yarn compile'"
   },
   "dependencies": {
-    "dotenv": "^9.0.2",
+    "dotenv": "^16.0.1",
     "mongoose-autopopulate": "^0.13.0"
   }
 }
