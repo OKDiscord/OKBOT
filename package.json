@@ -10,7 +10,7 @@
   "devDependencies": {
     "@prisma/client": "^2.22.1",
     "concurrently": "^6.1.0",
-    "prisma": "^2.22.1"
+    "prisma": "^4.2.1"
   },
   "scripts": {
     "bot": "yarn workspace @okbot/bot",
